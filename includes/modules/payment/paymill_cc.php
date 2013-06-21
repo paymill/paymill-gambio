@@ -32,13 +32,6 @@ class paymill_cc extends paymill
         }
 
         $amount = $amount + $this->getShippingTaxAmount($order);
-        
-        for ($i = 1; $i < 13; $i++) {
-            $expires_month[] = array(
-                'id' => sprintf('%02d', $i),
-                'text' => utf8_decode(strftime('%B', mktime(0, 0, 0, $i, 1, 2000)))
-            );
-        }
 
         $today = getdate();
         for ($i = $today['year']; $i < $today['year'] + 10; $i++) {//
@@ -47,6 +40,20 @@ class paymill_cc extends paymill
                 'text' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
             );
         }
+        
+        $expires_month = array();
+        $expires_month[] = array('id' => '01', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_JANUARY);
+        $expires_month[] = array('id' => '02', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_FEBRUARY);
+        $expires_month[] = array('id' => '03', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_MARCH);
+        $expires_month[] = array('id' => '04', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_APRIL);
+        $expires_month[] = array('id' => '05', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_MAY);
+        $expires_month[] = array('id' => '06', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_JUNE);
+        $expires_month[] = array('id' => '07', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_JULY);
+        $expires_month[] = array('id' => '08', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_AUGUST);
+        $expires_month[] = array('id' => '09', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_SEPTEMBER);
+        $expires_month[] = array('id' => '10', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_OCTOBER);
+        $expires_month[] = array('id' => '11', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_NOVEMBER);
+        $expires_month[] = array('id' => '12', 'text' => MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_DECEMBER);
 
         $months_string = '';
         foreach ($expires_month as $m) {
