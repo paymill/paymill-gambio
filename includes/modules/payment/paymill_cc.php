@@ -1,6 +1,6 @@
 <?php
 
-require_once('abstract/paymill.php');
+require_once('paymill/abstract/paymill.php');
 
 class paymill_cc extends paymill
 {
@@ -66,7 +66,7 @@ class paymill_cc extends paymill
             'field' => '<link rel="stylesheet" type="text/css" href="' . HTTP_SERVER . DIR_WS_CATALOG . 'css/paymill.css"/>'
         );
 
-        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/resources/';
+        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
         $this->accepted = xtc_image($resourcesDir . 'icon_mastercard.png') . " " . xtc_image($resourcesDir . 'icon_visa.png');
 
         $formArray[] = array(

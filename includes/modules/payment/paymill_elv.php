@@ -1,6 +1,6 @@
 <?php
 
-require_once('abstract/paymill.php');
+require_once('paymill/abstract/paymill.php');
 
 class paymill_elv extends paymill
 {
@@ -19,7 +19,7 @@ class paymill_elv extends paymill
 
     function selection()
     {
-        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/resources/';
+        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
 
         $formArray = array();
 
