@@ -14,7 +14,6 @@ class paymill_elv extends paymill
         $this->sort_order = MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER;
         $this->enabled = ((MODULE_PAYMENT_PAYMILL_ELV_STATUS == 'True') ? true : false);
         $this->privateKey = MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY;
-        $this->apiUrl = MODULE_PAYMENT_PAYMILL_ELV_API_URL;
     }
 
     function selection()
@@ -64,7 +63,7 @@ class paymill_elv extends paymill
                 . '<script type="text/javascript">'
                     . 'var PAYMILL_PUBLIC_KEY = "' . MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY . '";'
                 . '</script>'
-                . '<script type="text/javascript" src="' . MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL . '"></script>'
+                . '<script type="text/javascript" src="' . $this->bridgeUrl . '"></script>'
                 . '<script type="text/javascript">'
                     . 'var elv_account_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID)
                     . 'var elv_bank_code_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID)
@@ -109,10 +108,6 @@ class paymill_elv extends paymill
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED', '', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER', '0', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY', '0', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY', '0', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL', 'https://bridge.paymill.de/', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_API_URL', 'https://api.paymill.de/v2/', '6', '0', now())");
     }
 
     function remove()
@@ -127,9 +122,7 @@ class paymill_elv extends paymill
             'MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER',
             'MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY',
-            'MODULE_PAYMENT_PAYMILL_ELV_ALLOWED',
-            'MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL',
-            'MODULE_PAYMENT_PAYMILL_ELV_API_URL'
+            'MODULE_PAYMENT_PAYMILL_ELV_ALLOWED'
         );
     }
 

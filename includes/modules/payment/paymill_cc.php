@@ -13,7 +13,6 @@ class paymill_cc extends paymill
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
         $this->enabled = ((MODULE_PAYMENT_PAYMILL_CC_STATUS == 'True') ? true : false);
         $this->privateKey = MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY;
-        $this->apiUrl = MODULE_PAYMENT_PAYMILL_CC_API_URL;
     }
 
     function selection()
@@ -120,7 +119,7 @@ class paymill_cc extends paymill
                 . '<script type="text/javascript">'
                     . 'var PAYMILL_PUBLIC_KEY = "' . MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY . '";'
                 . '</script>'
-                . '<script type="text/javascript" src="' . MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL . '"></script>'
+                . '<script type="text/javascript" src="' . $this->bridgeUrl . '"></script>'
                 . '<script type="text/javascript">'
                     . 'var cc_expiery_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY_INVALID)
                     . 'var cc_card_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CARDNUMBER_INVALID)
@@ -167,8 +166,6 @@ class paymill_cc extends paymill
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY', '0', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL', 'https://bridge.paymill.de/', '6', '0', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_API_URL', 'https://api.paymill.de/v2/', '6', '0', now())");
     }
 
     function remove()
@@ -183,9 +180,7 @@ class paymill_cc extends paymill
             'MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER',
             'MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY',
-            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED',
-            'MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL',
-            'MODULE_PAYMENT_PAYMILL_CC_API_URL'
+            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED'
         );
     }
 

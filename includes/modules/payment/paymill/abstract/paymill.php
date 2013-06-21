@@ -9,7 +9,9 @@ class paymill
 {
 
     var $code, $title, $description = '', $enabled, $privateKey, $apiUrl;
-
+    var $bridgeUrl = 'https://bridge.paymill.com/';
+    var $apiUrl = 'https://api.paymill.com/v2/';
+    
     function pre_confirmation_check()
     {
         global $order, $xtPrice;

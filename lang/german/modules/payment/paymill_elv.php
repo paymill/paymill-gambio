@@ -12,10 +12,6 @@ define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Zahlung konnte nicht ausgeführ
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Zahlung konnte nicht ausgeührt werden.');
 define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_TITLE', 'Erlaubt f&uuml;r Zonen');
 define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_DESC', 'F&uuml;r alle Zonen leer lassen');
-define('MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL_TITLE', 'Bridge URL');
-define('MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL_DESC', '');
-define('MODULE_PAYMENT_PAYMILL_ELV_API_URL_TITLE', 'API URL');
-define('MODULE_PAYMENT_PAYMILL_ELV_API_URL_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_PUBLIC_TITLE', 'Elektronische Lastschriftverfahren');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT', 'Kontonummer');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE', 'Bankleitzahl');
