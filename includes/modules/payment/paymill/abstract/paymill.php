@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(dirname(__FILE__)) . '/lib/payintelligent/processPayment.php');
+require_once(dirname(dirname(__FILE__)) . '/lib/Services/PaymentProcessor.php');
 
 /**
  * Paymill payment plugin
