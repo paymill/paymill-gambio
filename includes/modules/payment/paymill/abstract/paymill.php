@@ -8,7 +8,7 @@ require_once(dirname(dirname(__FILE__)) . '/lib/Services/PaymentProcessor.php');
 class paymill
 {
 
-    var $code, $title, $description = '', $enabled, $privateKey, $apiUrl;
+    var $code, $title, $description = '', $enabled, $privateKey;
     var $bridgeUrl = 'https://bridge.paymill.com/';
     var $apiUrl = 'https://api.paymill.com/v2/';
     
