@@ -9,8 +9,8 @@ class paymill_elv extends paymill
     {
         $this->code = 'paymill_elv';
         $this->version = '1.0.3';
-        $this->title = 'Elektronisches Lastschriftverfahren';
-        $this->public_title = 'Elektronisches Lastschriftverfahren';
+        $this->title = MODULE_PAYMENT_PAYMILL_ELV_TEXT_TITLE;
+        $this->public_title = MODULE_PAYMENT_PAYMILL_ELV_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER;
         $this->enabled = ((MODULE_PAYMENT_PAYMILL_ELV_STATUS == 'True') ? true : false);
         $this->privateKey = MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY;
@@ -34,17 +34,17 @@ class paymill_elv extends paymill
         );
 
         $formArray[] = array(
-            'title' => 'Kontonummer',
+            'title' => MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT,
             'field' => '<br/><input type="text" id="account-number" class="form-row-paymill"/>'
         );
 
         $formArray[] = array(
-            'title' => 'Bankleitzahl',
+            'title' => MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE,
             'field' => '<br/><input type="text" id="bank-code" class="form-row-paymill"/>'
         );
 
         $formArray[] = array(
-            'title' => 'Kontoinhaber',
+            'title' => MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER,
             'field' => '<br/><input type="text" id="bank-owner" class="form-row-paymill"/>'
         );
 
@@ -53,7 +53,7 @@ class paymill_elv extends paymill
             '<div class="form-row">'
               . '<div class="paymill_powered">'
                    . '<div class="paymill_credits">'
-                       . 'Sichere Kreditkartenzahlung powered by'
+                       . MODULE_PAYMENT_PAYMILL_ELV_TEXT_SAVED
                       . ' <a href="http://www.paymill.de" target="_blank">Paymill</a>'
                    . '</div>'
                . '</div>'
@@ -66,9 +66,9 @@ class paymill_elv extends paymill
                 . '</script>'
                 . '<script type="text/javascript" src="' . MODULE_PAYMENT_PAYMILL_ELV_BRIDGE_URL . '"></script>'
                 . '<script type="text/javascript">'
-                    . 'var elv_account_number_invalid = ' . utf8_decode('"Die Kontonummer, die Sie angegeben haben, ist ungültig. Bitte korrigieren Sie Ihre Angaben.";')
-                    . 'var elv_bank_code_invalid = ' . utf8_decode('"Die Bankleitzahl, die Sie angegeben haben, ist ungültig. Bitte korrigieren Sie Ihre Angaben.";')
-                    . 'var elv_bank_owner_invalid = ' . utf8_decode('"Die Kontonummer, die Sie angegeben haben, ist ungültig. Bitte korrigieren Sie Ihre Angaben.";')
+                    . 'var elv_account_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID)
+                    . 'var elv_bank_code_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID)
+                    . 'var elv_bank_owner_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER_INVALID)
                     . file_get_contents(DIR_FS_CATALOG . 'javascript/paymill_elv_checkout.js')
                 . '</script>';
 

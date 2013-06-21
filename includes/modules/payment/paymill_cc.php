@@ -8,8 +8,8 @@ class paymill_cc extends paymill
     {
         $this->code = 'paymill_cc';
         $this->version = '1.0.3';
-        $this->title = 'Kreditkartenzahlung';
-        $this->public_title = 'Kreditkartenzahlung';
+        $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
+        $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
         $this->enabled = ((MODULE_PAYMENT_PAYMILL_CC_STATUS == 'True') ? true : false);
         $this->privateKey = MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY;
@@ -74,19 +74,19 @@ class paymill_cc extends paymill
         );
 
         $formArray[] = array(
-            'title' => 'Kreditkarten-Nummer',
+            'title' => MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_NUMBER,
             'field' => '<br/><input type="text" id="card-number" class="form-row-paymill"/>'
         );
 
         $formArray[] = array(
-            'title' => 'G&uuml;ltigkeitsdatum',
+            'title' => MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY,
             'field' => '<br/><span class="paymill-expiry"><select id="card-expiry-month">' . $months_string . '</select>'
                      . '&nbsp;'
                      . '<select id="card-expiry-year">' . $years_string . '</select></span>'
         );
 
         $formArray[] = array(
-            'title' => 'CVC-Code',
+            'title' => MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC,
             'field' => '<br/><span class="card-cvc-row"><input type="text" size="4" id="card-cvc" class="form-row-paymill"/></span>'
             . '<br/>'
             . '<a href="javascript:popupWindow(\'' . xtc_href_link(FILENAME_POPUP_CVV, '', 'SSL') . '\')">Info</a>'
@@ -97,7 +97,7 @@ class paymill_cc extends paymill
             '<div class="form-row">'
               . '<div class="paymill_powered">'
                    . '<div class="paymill_credits">'
-                       . 'Sichere Kreditkartenzahlung powered by'
+                       . MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_SAVED
                       . ' <a href="http://www.paymill.de" target="_blank">Paymill</a>'
                    . '</div>'
                . '</div>'
@@ -122,9 +122,9 @@ class paymill_cc extends paymill
                 . '</script>'
                 . '<script type="text/javascript" src="' . MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL . '"></script>'
                 . '<script type="text/javascript">'
-                    . 'var cc_expiery_invalid = ' . utf8_decode('"Das Gültigkeitsdatum ihrer Kreditkarte ist ungültig. Bitte korrigieren Sie Ihre Angaben.";')
-                    . 'var cc_card_number_invalid = ' . utf8_decode('"Die Kreditkarten-Nummer, die Sie angegeben haben, ist ungültig. Bitte korrigieren Sie Ihre Angaben.";')
-                    . 'var cc_cvc_number_invalid = ' . utf8_decode('"Das Formularfeld Kontoinhaber ist ein Pflichfeld.";')
+                    . 'var cc_expiery_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY_INVALID)
+                    . 'var cc_card_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CARDNUMBER_INVALID)
+                    . 'var cc_cvc_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC_INVALID)
                     . file_get_contents(DIR_FS_CATALOG . 'javascript/paymill_cc_checkout.js')
                 . '</script>';
 

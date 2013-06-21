@@ -1,6 +1,5 @@
 <?php
 define('MODULE_PAYMENT_PAYMILL_CC_ACCEPTED_CARDS', 'Akzeptierte Kreditkarten');
-define('MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE', 'Kreditkarte');
 define('MODULE_PAYMENT_PAYMILL_CC_STATUS_TITLE', 'Kreditkartenmodul aktivieren');
 define('MODULE_PAYMENT_PAYMILL_CC_STATUS_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER_TITLE', 'Anzeigereihenfolge');
@@ -17,3 +16,12 @@ define('MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL_TITLE', 'Bridge URL');
 define('MODULE_PAYMENT_PAYMILL_CC_BRIDGE_URL_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_CC_API_URL_TITLE', 'API URL');
 define('MODULE_PAYMENT_PAYMILL_CC_API_URL_DESC', '');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE','Kreditkartenzahlung');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE','Kreditkartenzahlung');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_NUMBER','Kreditkarten-Nummer');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY','G&uuml;ltigkeitsdatum');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC','CVC-Code');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_SAVED','Sichere Kreditkartenzahlung powered by');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY_INVALID','"Das Gültigkeitsdatum ihrer Kreditkarte ist ungültig. Bitte korrigieren Sie Ihre Angaben.";');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CARDNUMBER_INVALID','"Die Kreditkarten-Nummer, die Sie angegeben haben, ist ungültig. Bitte korrigieren Sie Ihre Angaben.";');
+define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC_INVALID','"Das Formularfeld CVC ist ein Pflichfeld.";');
