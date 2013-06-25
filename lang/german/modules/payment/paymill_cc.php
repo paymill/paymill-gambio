@@ -13,9 +13,9 @@ define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Zahlung konnte nicht ausgeführ
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_TITLE', 'Erlaubt f&uuml;r Zonen');
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_DESC', 'F&uuml;r alle Zonen leer lassen');
 define('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_TITLE', 'Bestellstatus');
-define('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_DESC', 'Setzt den Bestellstatus für erfolgreiche Zahlungen');
+define('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_DESC', 'Setzt den Bestellstatus f&uuml;r erfolgreiche Zahlungen');
 define('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID_TITLE', 'Tempor&auml;rer Bestellstatus');
-define('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID_DESC', 'Setzt den tempor&auml;ren Bestellstatus für tempor&auml;re Bestellungen, die noch nicht bezahlt wurden.');
+define('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID_DESC', 'Setzt den tempor&auml;ren Bestellstatus f&uuml;r tempor&auml;re Bestellungen, die noch nicht bezahlt wurden.');
 define('MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE','Kreditkartenzahlung');
 define('MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE','Kreditkartenzahlung');
 define('MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_NUMBER','Kreditkarten-Nummer');
