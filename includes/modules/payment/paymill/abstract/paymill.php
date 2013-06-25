@@ -1,17 +1,17 @@
 <?php
 
-require_once(dirname(dirname(__FILE__)) . '/lib/Services/PaymentProcessor.php');
-
+require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/PaymentProcessor.php');
+require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/PaymentProcessorInterface.php');
 /**
  * Paymill payment plugin
  */
-class paymill
+class paymill implements Services_Paymill_PaymentProcessorInterface
 {
 
     var $code, $title, $description = '', $enabled, $privateKey;
     var $bridgeUrl = 'https://bridge.paymill.com/';
     var $apiUrl = 'https://api.paymill.com/v2/';
-    
+
     function pre_confirmation_check()
     {
         global $order, $xtPrice;
@@ -88,26 +88,30 @@ class paymill
         } else {
             $total = $order->info['total'];
         }
-        
+
         $total = floatval(str_replace(',', '.', str_replace('.', '', $total))) + $this->getShippingTaxAmount($order);
-        
-        $paymill = new processPayment($this);
+
         $authorizedAmount = $_SESSION['pi']['paymill_amount'];
-        
+
         if ($this->code === 'paymill_elv') {
             $authorizedAmount = $total;
         }
-        
-        $result = $paymill->processPayment(array(
-            'token' => $_SESSION['paymill_token'],
-            'authorizedAmount' => $authorizedAmount * 100,
-            'amount' => $total * 100,
-            'currency' => strtoupper($order->info['currency']),
-            'name' => $order->customer['lastname'] . ', ' . $order->customer['firstname'],
-            'email' => $order->customer['email_address'],
-            'description' => STORE_NAME . ' Bestellnummer: ' . $insert_id,
-        ));
-        
+
+        $paymill = new Services_Paymill_PaymentProcessor();
+        $paymill->setAmount((int)$total * 100);
+        $paymill->setApiUrl((string)$this->apiUrl);
+        $paymill->setAuthorizedAmount((int)$authorizedAmount * 100);
+        $paymill->setCurrency((string)strtoupper($order->info['currency']));
+        $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $insert_id);
+        $paymill->setEmail((string)$order->customer['email_address']);
+        $paymill->setName((string)$order->customer['lastname'] . ', ' . $order->customer['firstname']);
+        $paymill->setPrivateKey((string)$this->privateKey);
+        $paymill->setToken((string)$_SESSION['paymill_token']);
+        $paymill->setLogger($this);
+
+
+        $result = $paymill->processPayment();
+
         if (!$result) {
             xtc_db_query("UPDATE " . TABLE_ORDERS . " SET orders_status = (SELECT orders_status_id from " . TABLE_ORDERS_STATUS . " where orders_status_name LIKE '%Paymill%' GROUP by orders_status_id) WHERE orders_id = '" . $insert_id . "'");
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=200', 'SSL', true, false));
@@ -117,10 +121,10 @@ class paymill
 
         return true;
     }
-    
+
     /**
      * Add the shipping tax to the order object
-     * 
+     *
      * @param order $order
      * @return float
      */
@@ -131,9 +135,9 @@ class paymill
 
     /**
      * Retrieve the shipping tax rate
-     * 
+     *
      * @param order $order
-     * @return float 
+     * @return float
      */
     public function getShippingTaxRate(order $order)
     {
@@ -151,6 +155,12 @@ class paymill
         }
 
         return $shippingTaxRate;
+    }
+
+    public function log($messageInfo, $debuginfo) {
+        //print_r($messageInfo);
+        //print_r($debuginfo);
+        return true;
     }
 
 }
