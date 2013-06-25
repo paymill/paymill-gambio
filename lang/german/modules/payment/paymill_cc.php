@@ -8,6 +8,8 @@ define('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY_TITLE', 'Geheimer API Key');
 define('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY_TITLE', '&Ouml;ffentlicher API Key');
 define('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY_DESC', '');
+define('MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT_TITLE', 'Differenzwerte');
+define('MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT_DESC', 'Falls sich der Gesamtbestellwert nach der Zahlartenauswahl ändern kann, z.B. bei Zahlartenaufschlägen, muss hier der maximale Wert drin stehen.');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Zahlung konnte nicht ausgeführt werden. Der Zahlungsstatus ist "open"');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Zahlung konnte nicht ausgeführt werden.');
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_TITLE', 'Erlaubt f&uuml;r Zonen');

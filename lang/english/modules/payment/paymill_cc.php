@@ -8,6 +8,8 @@ define('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY_TITLE', 'Private API Key');
 define('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY_TITLE', 'Public API Key');
 define('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY_DESC', '');
+define('MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT_TITLE', 'Difference Amount');
+define('MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT_DESC', 'This is needed if the cart price changes after payment selection, for example on payment fees. This is the max amount, which can differ from payment selecton.');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Payment could not be processed. The payment status is "open"');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Payment could not be processed.');
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_TITLE', 'Allowed for Zones');
