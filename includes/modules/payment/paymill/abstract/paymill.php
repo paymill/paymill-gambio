@@ -5,7 +5,7 @@ require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/LoggingInterfac
 /**
  * Paymill payment plugin
  */
-class paymill implements Services_Paymill_PaymentProcessorInterface
+class paymill implements Services_Paymill_LoggingInterface
 {
 
     var $code, $title, $description = '', $enabled, $privateKey;
@@ -91,16 +91,9 @@ class paymill implements Services_Paymill_PaymentProcessorInterface
 
         $total = floatval(str_replace(',', '.', str_replace('.', '', $total))) + $this->getShippingTaxAmount($order);
 
-        $authorizedAmount = $_SESSION['pi']['paymill_amount'];
-
-        if ($this->code === 'paymill_elv') {
-            $authorizedAmount = $total;
-        }
-
         $paymill = new Services_Paymill_PaymentProcessor();
         $paymill->setAmount((int)$total * 100);
         $paymill->setApiUrl((string)$this->apiUrl);
-        $paymill->setAuthorizedAmount((int)$authorizedAmount * 100);
         $paymill->setCurrency((string)strtoupper($order->info['currency']));
         $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $insert_id);
         $paymill->setEmail((string)$order->customer['email_address']);
