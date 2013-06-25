@@ -1,7 +1,7 @@
 <?php
 
 require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/PaymentProcessor.php');
-require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/PaymentProcessorInterface.php');
+require_once(dirname(dirname(__FILE__)) . '/lib/Services/Paymill/LoggingInterface.php');
 /**
  * Paymill payment plugin
  */
