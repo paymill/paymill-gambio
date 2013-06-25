@@ -10,8 +10,12 @@ define('MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY_TITLE', '&Ouml;ffentlicher API Key'
 define('MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Zahlung konnte nicht ausgeführt werden. Der Zahlungsstatus ist "open"');
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Zahlung konnte nicht ausgeührt werden.');
-define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_TITLE', 'Erlaubt f&uuml;r Zonen');
-define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_DESC', 'F&uuml;r alle Zonen leer lassen');
+define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_TITLE', 'Allowed for Zones');
+define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_DESC', 'For all Zones let it empty');
+define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_TITLE', 'Order Status');
+define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_DESC', 'Sets the order status for successful payment');
+define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_TITLE', 'Temporarily Order Status');
+define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_DESC', 'Sets the temporarily order status for temporarily orders which are not paid.');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_PUBLIC_TITLE', 'Debit');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT', 'Account Number');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE', 'Bank Code');

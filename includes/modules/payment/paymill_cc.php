@@ -13,6 +13,10 @@ class paymill_cc extends paymill
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
         $this->enabled = ((MODULE_PAYMENT_PAYMILL_CC_STATUS == 'True') ? true : false);
         $this->privateKey = MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY;
+        $this->tmpOrders = true;
+        $this->tmpStatus = MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID;
+        $this->order_status = MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID;
+        $this->form_action_url = '';
     }
 
     function selection()
@@ -158,19 +162,21 @@ class paymill_cc extends paymill
 
     function install()
     {
-        if (xtc_db_num_rows(xtc_db_query("SELECT * from " . TABLE_ORDERS_STATUS . " where orders_status_name LIKE '%Paymill%'")) == 0) {
+        if (xtc_db_num_rows(xtc_db_query("SELECT * from " . TABLE_ORDERS_STATUS . " where orders_status_name LIKE 'Paymill Payment pending'")) == 0) {
             //based on orders_status.php with action save new orders_status_id
             $next_id_query = xtc_db_query("select max(orders_status_id) as orders_status_id from " . TABLE_ORDERS_STATUS . "");
             $next_id = xtc_db_fetch_array($next_id_query);
             $orders_status_id = $next_id['orders_status_id'] + 1;
             //based on orders_status.php ends
-            xtc_db_query("INSERT INTO " . TABLE_ORDERS_STATUS . " (orders_status_id, language_id, orders_status_name) VALUES (" . $orders_status_id . ",1, 'Paymill Payment cancelled'),(" . $orders_status_id . ",2,'Paymill Bezahlung abgebrochen');");
+            xtc_db_query("INSERT INTO " . TABLE_ORDERS_STATUS . " (orders_status_id, language_id, orders_status_name) VALUES (" . $orders_status_id . ",1, 'Paymill Payment pending'),(" . $orders_status_id . ",2,'Paymill Zahlung ausstehend');");
         }
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_ALLOWED', '', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY', '0', '6', '0', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
+	xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID', '0',  '6', '8', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
     }
 
     function remove()
@@ -185,7 +191,9 @@ class paymill_cc extends paymill
             'MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER',
             'MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY',
-            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED'
+            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED',
+            'MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID',
+            'MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID'
         );
     }
 

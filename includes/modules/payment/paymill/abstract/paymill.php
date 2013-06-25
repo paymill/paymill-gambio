@@ -79,9 +79,9 @@ class paymill implements Services_Paymill_LoggingInterface
         return '';
     }
 
-    function after_process()
+    function payment_action()
     {
-        global $order, $insert_id;
+        global $order;
 
         if ($_SESSION['customers_status']['customers_status_show_price_tax'] == 0 && $_SESSION['customers_status']['customers_status_add_tax_ot'] == 1) {
             $total = $order->info['total'] + $order->info['tax'];
@@ -95,7 +95,7 @@ class paymill implements Services_Paymill_LoggingInterface
         $paymill->setAmount((int)$total * 100);
         $paymill->setApiUrl((string)$this->apiUrl);
         $paymill->setCurrency((string)strtoupper($order->info['currency']));
-        $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $insert_id);
+        $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $_SESSION['tmp_oID']);
         $paymill->setEmail((string)$order->customer['email_address']);
         $paymill->setName((string)$order->customer['lastname'] . ', ' . $order->customer['firstname']);
         $paymill->setPrivateKey((string)$this->privateKey);
@@ -106,11 +106,19 @@ class paymill implements Services_Paymill_LoggingInterface
         $result = $paymill->processPayment();
 
         if (!$result) {
-            xtc_db_query("UPDATE " . TABLE_ORDERS . " SET orders_status = (SELECT orders_status_id from " . TABLE_ORDERS_STATUS . " where orders_status_name LIKE '%Paymill%' GROUP by orders_status_id) WHERE orders_id = '" . $insert_id . "'");
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=200', 'SSL', true, false));
+        } else {
+            xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PROCESS, 'SSL', true, false));
         }
+    }
+    
+    function after_process()
+    {
+        global $order, $insert_id;
 
-        unset($_SESSION['pi']);
+        if ($this->order_status) {
+		xtc_db_query("UPDATE ".TABLE_ORDERS." SET orders_status='".$this->order_status."' WHERE orders_id='".$insert_id."'");
+        }
 
         return true;
     }
