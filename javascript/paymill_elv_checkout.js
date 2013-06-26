@@ -1,4 +1,11 @@
 var isElvSubmitted = false;
+
+function paymillElvLog(message) {
+    if(elvlogging === "True") {
+        console.log(message);
+    }
+}
+
 $(document).ready(function () {
     $("#checkout_payment").submit(function () {
         if (!isElvSubmitted) {
@@ -34,10 +41,10 @@ $(document).ready(function () {
     { 
         isElvSubmitted = true;
         if (error) {
-            console.log("An API error occured: " + error.apierror);
+            paymillElvLog("An API error occured: " + error.apierror);
             return false;
         } else {
-            console.log(result.token);
+            paymillElvLog(result.token);
             $("#checkout_payment").append("<input type='hidden' name='paymill_token' value='" + result.token + "'/>");
             $("#checkout_payment").submit();
             return false;

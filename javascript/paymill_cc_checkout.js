@@ -1,4 +1,13 @@
 var isCcSubmitted = false;
+
+function paymillCcLog(message)
+{
+    if(cclogging === "True")
+    {
+        console.log(message);
+    }
+}
+
 $(document).ready(function () {
     $("#checkout_payment").submit(function () {
         if (!isCcSubmitted) {
@@ -37,15 +46,13 @@ $(document).ready(function () {
     { 
         isCcSubmitted = true;
         if (error) {
-            console.log("An API error occured: " + error.apierror);
+            paymillCcLog("An API error occured: " + error.apierror);
             return false;
         } else {
-            console.log(result.token);
-            
+            paymillCcLog(result.token);
             $("#checkout_payment").append("<input type='hidden' name='paymill_token' value='" + result.token + "'/>");
             $("#checkout_payment").submit();
             return false;
         }
     }
-
 });

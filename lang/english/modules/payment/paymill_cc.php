@@ -14,6 +14,8 @@ define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Payment could not be processed.
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Payment could not be processed.');
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_TITLE', 'Allowed for Zones');
 define('MODULE_PAYMENT_PAYMILL_CC_ALLOWED_DESC', 'For all Zones let it empty');
+define('MODULE_PAYMENT_PAYMILL_CC_LOGGING_TITLE', 'Activate Logging');
+define('MODULE_PAYMENT_PAYMILL_CC_LOGGING_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_TITLE', 'Order Status');
 define('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_DESC', 'Sets the order status for successful payment');
 define('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID_TITLE', 'Temporarily Order Status');

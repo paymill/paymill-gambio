@@ -17,6 +17,7 @@ class paymill_cc extends paymill
         $this->tmpStatus = MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID;
         $this->order_status = MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID;
         $this->form_action_url = '';
+        $this->logging = MODULE_PAYMENT_PAYMILL_CC_LOGGING;
     }
 
     function selection()
@@ -135,6 +136,7 @@ class paymill_cc extends paymill
                 . '</script>'
                 . '<script type="text/javascript" src="' . $this->bridgeUrl . '"></script>'
                 . '<script type="text/javascript">'
+                    . 'var cclogging = "' . MODULE_PAYMENT_PAYMILL_CC_LOGGING . '";'
                     . 'var cc_expiery_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY_INVALID)
                     . 'var cc_card_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CARDNUMBER_INVALID)
                     . 'var cc_cvc_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC_INVALID)
@@ -188,6 +190,7 @@ class paymill_cc extends paymill
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT', '10', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
 	xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID', '" . $tmp_status_id . "',  '6', '8', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_LOGGING', 'False', '6', '0', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
     }
 
     function remove()
@@ -199,13 +202,14 @@ class paymill_cc extends paymill
     {
         return array(
             'MODULE_PAYMENT_PAYMILL_CC_STATUS',
-            'MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER',
+            'MODULE_PAYMENT_PAYMILL_CC_LOGGING',
             'MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY',
             'MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_CC_ADD_AMOUNT',
-            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED',
             'MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID',
-            'MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID'
+            'MODULE_PAYMENT_PAYMILL_CC_TMP_STATUS_ID',
+            'MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER',
+            'MODULE_PAYMENT_PAYMILL_CC_ALLOWED'
         );
     }
 

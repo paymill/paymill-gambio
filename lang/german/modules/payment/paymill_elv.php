@@ -12,6 +12,8 @@ define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100', 'Zahlung konnte nicht ausgeführ
 define('MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200', 'Zahlung konnte nicht ausgeührt werden.');
 define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_TITLE', 'Erlaubt f&uuml;r Zonen');
 define('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED_DESC', 'F&uuml;r alle Zonen leer lassen');
+define('MODULE_PAYMENT_PAYMILL_ELV_LOGGING_TITLE', 'Logging aktivieren');
+define('MODULE_PAYMENT_PAYMILL_ELV_LOGGING_DESC', '');
 define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_TITLE', 'Bestellstatus');
 define('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID_DESC', 'Setzt den Bestellstatus f&uuml;r erfolgreiche Zahlungen');
 define('MODULE_PAYMENT_PAYMILL_ELV_TMP_STATUS_ID_TITLE', 'Tempor&auml;rer Bestellstatus');

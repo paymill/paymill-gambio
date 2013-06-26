@@ -11,6 +11,7 @@ class paymill implements Services_Paymill_LoggingInterface
     var $code, $title, $description = '', $enabled, $privateKey;
     var $bridgeUrl = 'https://bridge.paymill.com/';
     var $apiUrl = 'https://api.paymill.com/v2/';
+    var $logging;
 
     function pre_confirmation_check()
     {
@@ -158,10 +159,16 @@ class paymill implements Services_Paymill_LoggingInterface
         return $shippingTaxRate;
     }
 
-    public function log($messageInfo, $debuginfo) {
-        //print_r($messageInfo);
-        //print_r($debuginfo);
-        return true;
+    public function log($messageInfo, $debugInfo) {
+        if($this->logging) {
+            $logfile = dirname(dirname(__FILE__)) . '/log/log.txt';
+            if (file_exists($logfile) && is_writable($logfile)) {
+                $handle = fopen($logfile, 'a');
+                fwrite($handle, "[" . date(DATE_RFC822) . "] " . $messageInfo . "\n");
+                fwrite($handle, "[" . date(DATE_RFC822) . "] " . $debugInfo . "\n");
+                fclose($handle);
+            }
+        }
     }
 
 }
