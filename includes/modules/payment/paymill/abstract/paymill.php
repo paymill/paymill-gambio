@@ -82,7 +82,7 @@ class paymill implements Services_Paymill_LoggingInterface
 
     function payment_action()
     {
-        global $order;
+        global $order, $xtPrice;
 
         if ($_SESSION['customers_status']['customers_status_show_price_tax'] == 0 && $_SESSION['customers_status']['customers_status_add_tax_ot'] == 1) {
             $total = $order->info['total'] + $order->info['tax'];
@@ -90,10 +90,16 @@ class paymill implements Services_Paymill_LoggingInterface
             $total = $order->info['total'];
         }
 
-        $total = floatval(str_replace(',', '.', str_replace('.', '', $total))) + $this->getShippingTaxAmount($order);
+        if ($_SESSION['currency'] == $order->info['currency']) {
+            $amount = round($total, $xtPrice->get_decimal_places($order->info['currency']));
+        } else {
+            $amount = round($xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency']));
+        }
+
+        $total = $amount + $this->getShippingTaxAmount($order);
 
         $paymill = new Services_Paymill_PaymentProcessor();
-        $paymill->setAmount((int)$total * 100);
+        $paymill->setAmount((int)($total * 100));
         $paymill->setApiUrl((string)$this->apiUrl);
         $paymill->setCurrency((string)strtoupper($order->info['currency']));
         $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $_SESSION['tmp_oID']);
