@@ -96,10 +96,8 @@ class paymill implements Services_Paymill_LoggingInterface
             $amount = round($xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency']));
         }
 
-        $total = $amount + $this->getShippingTaxAmount($order);
-
         $paymill = new Services_Paymill_PaymentProcessor();
-        $paymill->setAmount((int)($total * 100));
+        $paymill->setAmount((int)($amount * 100));
         $paymill->setApiUrl((string)$this->apiUrl);
         $paymill->setCurrency((string)strtoupper($order->info['currency']));
         $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $_SESSION['tmp_oID']);
