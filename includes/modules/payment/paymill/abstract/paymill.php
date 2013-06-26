@@ -88,8 +88,8 @@ class paymill implements Services_Paymill_LoggingInterface
             $total = $order->info['total'] + $order->info['tax'];
         } else {
             $total = $order->info['total'];
-        }
-
+        } 
+        
         if ($_SESSION['currency'] == $order->info['currency']) {
             $amount = round($total, $xtPrice->get_decimal_places($order->info['currency']));
         } else {
@@ -97,7 +97,7 @@ class paymill implements Services_Paymill_LoggingInterface
         }
 
         $paymill = new Services_Paymill_PaymentProcessor();
-        $paymill->setAmount((int)($amount * 100));
+        $paymill->setAmount((int)(string)($amount * 100));
         $paymill->setApiUrl((string)$this->apiUrl);
         $paymill->setCurrency((string)strtoupper($order->info['currency']));
         $paymill->setDescription((string)STORE_NAME . ' Bestellnummer: ' . $_SESSION['tmp_oID']);
