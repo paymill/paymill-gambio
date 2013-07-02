@@ -95,6 +95,8 @@ class paymill implements Services_Paymill_LoggingInterface
         } else {
             $amount = round($xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency']));
         }
+        
+        
 
         $paymill = new Services_Paymill_PaymentProcessor();
         $paymill->setAmount((int)(string)($amount * 100));
