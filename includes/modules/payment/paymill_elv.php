@@ -71,9 +71,9 @@ class paymill_elv extends paymill
                 . '<script type="text/javascript" src="' . $this->bridgeUrl . '"></script>'
                 . '<script type="text/javascript">'
                     . 'var elvlogging = "' . MODULE_PAYMENT_PAYMILL_ELV_LOGGING . '";'
-                    . 'var elv_account_number_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID)
-                    . 'var elv_bank_code_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID)
-                    . 'var elv_bank_owner_invalid = ' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER_INVALID)
+                    . 'var elv_account_number_invalid = "' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID) . '";'
+                    . 'var elv_bank_code_invalid = "' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID) . '";'
+                    . 'var elv_bank_owner_invalid = "' . utf8_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER_INVALID) . '";'
                     . file_get_contents(DIR_FS_CATALOG . 'javascript/paymill_elv_checkout.js')
                 . '</script>';
 
