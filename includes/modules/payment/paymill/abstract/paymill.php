@@ -108,7 +108,7 @@ class paymill implements Services_Paymill_LoggingInterface
         $paymill->setPrivateKey((string)$this->privateKey);
         $paymill->setToken((string)$_SESSION['paymill_token']);
         $paymill->setLogger($this);
-
+        $paymill->setSource($this->version . '_' . str_replace(' ','_', PROJECT_VERSION));
 
         $result = $paymill->processPayment();
 
