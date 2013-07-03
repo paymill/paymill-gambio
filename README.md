@@ -5,13 +5,13 @@ xtCommerce (Version 3.x) Plugin for Paymill credit card and elv payments
 
 # Installation
 
-Important: Use the following command to clone the complete repository including the submodules:
-    
-    git clone --recursive https://github.com/Paymill/Paymill-xtCommerce-3.git
+Download the following zip file and upload the extracted files in the root directory of your xtCommerce shop.
+
+https://github.com/paymill/paymill-xtcommerce-3/archive/master.zip
 
 # Configuration
 
-Afterwards enable Paymill in your shop backend and insert your test or live keys. In the configuration set API-URL to https://api.paymill.de/v2/.
+Afterwards enable Paymill in your shop backend and insert your test or live keys.
 
 # In case of errors
 
