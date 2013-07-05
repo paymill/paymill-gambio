@@ -11,7 +11,7 @@ function paymillCcLog(message)
 $(document).ready(function () {
     $("#checkout_payment").submit(function () {
         if (!isCcSubmitted) {
-            if ($("input[name=\'payment\'][value=\'paymill_cc\']").prop("checked")) {
+            if ($("input[name=\'payment\'][value=\'paymill_cc\']").attr("checked")) {
                 if (!paymill.validateExpiry($("#card-expiry-month option:selected").val(), $("#card-expiry-year option:selected").val())) {
                     alert(cc_expiery_invalid);
                     return false;

@@ -7,7 +7,7 @@ class paymill_cc extends paymill
     function paymill_cc()
     {
         $this->code = 'paymill_cc';
-        $this->version = '1.0.4';
+        $this->version = '1.0.5';
         $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
@@ -36,8 +36,10 @@ class paymill_cc extends paymill
             $amount = round($xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency']));
         }
 
-        $amount = $amount + $this->getShippingTaxAmount($order);
-
+        if (!empty($order)) {       
+            $amount = $amount + $this->getShippingTaxAmount($order);
+        }
+        
         $today = getdate();
         for ($i = $today['year']; $i < $today['year'] + 10; $i++) {//
             $expires_year[] = array(

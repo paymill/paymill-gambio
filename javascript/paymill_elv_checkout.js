@@ -9,7 +9,7 @@ function paymillElvLog(message) {
 $(document).ready(function () {
     $("#checkout_payment").submit(function () {
         if (!isElvSubmitted) {
-            if ($("input[name=\'payment\'][value=\'paymill_elv\']").prop("checked")) {
+            if ($("input[name=\'payment\'][value=\'paymill_elv\']").attr("checked")) {
                 if (false === paymill.validateAccountNumber($('#account-number').val())) {
                     alert(elv_account_number_invalid);
                     return false;

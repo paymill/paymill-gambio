@@ -83,7 +83,7 @@ class paymill implements Services_Paymill_LoggingInterface
     function payment_action()
     {
         global $order, $xtPrice;
-
+        
         if ($_SESSION['customers_status']['customers_status_show_price_tax'] == 0 && $_SESSION['customers_status']['customers_status_add_tax_ot'] == 1) {
             $total = $order->info['total'] + $order->info['tax'];
         } else {
@@ -96,8 +96,6 @@ class paymill implements Services_Paymill_LoggingInterface
             $amount = round($xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency']));
         }
         
-        
-
         $paymill = new Services_Paymill_PaymentProcessor();
         $paymill->setAmount((int)(string)($amount * 100));
         $paymill->setApiUrl((string)$this->apiUrl);
@@ -121,7 +119,7 @@ class paymill implements Services_Paymill_LoggingInterface
     
     function after_process()
     {
-        global $order, $insert_id;
+        global $insert_id;
 
         if ($this->order_status) {
 		xtc_db_query("UPDATE ".TABLE_ORDERS." SET orders_status='".$this->order_status."' WHERE orders_id='".$insert_id."'");
