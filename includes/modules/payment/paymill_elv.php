@@ -8,7 +8,7 @@ class paymill_elv extends paymill
     function paymill_elv()
     {
         $this->code = 'paymill_elv';
-        $this->version = '1.0.5';
+        $this->version = '1.0.6';
         $this->title = MODULE_PAYMENT_PAYMILL_ELV_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_ELV_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER;
@@ -23,13 +23,13 @@ class paymill_elv extends paymill
 
     function selection()
     {
-        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
+        $resourcesDir = HTTPS_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
 
         $formArray = array();
 
         $formArray[] = array(
             'title' => '',
-            'field' => '<link rel="stylesheet" type="text/css" href="' . HTTP_SERVER . DIR_WS_CATALOG . 'css/paymill.css"/>'
+            'field' => '<link rel="stylesheet" type="text/css" href="' . HTTPS_SERVER . DIR_WS_CATALOG . 'css/paymill.css"/>'
         );
 
         $formArray[] =  array(
@@ -58,7 +58,7 @@ class paymill_elv extends paymill
               . '<div class="paymill_powered">'
                    . '<div class="paymill_credits">'
                        . MODULE_PAYMENT_PAYMILL_ELV_TEXT_SAVED
-                      . ' <a href="http://www.paymill.de" target="_blank">Paymill</a>'
+                      . ' <a href="http://www.paymill.de" target="_blank">PAYMILL</a>'
                    . '</div>'
                . '</div>'
            . '</div>'

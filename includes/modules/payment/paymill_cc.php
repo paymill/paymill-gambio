@@ -7,7 +7,7 @@ class paymill_cc extends paymill
     function paymill_cc()
     {
         $this->code = 'paymill_cc';
-        $this->version = '1.0.5';
+        $this->version = '1.0.6';
         $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
@@ -79,7 +79,7 @@ class paymill_cc extends paymill
             'field' => '<link rel="stylesheet" type="text/css" href="' . HTTP_SERVER . DIR_WS_CATALOG . 'css/paymill.css"/>'
         );
 
-        $resourcesDir = HTTP_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
+        $resourcesDir = HTTPS_SERVER . DIR_WS_CATALOG . '/includes/modules/payment/paymill/resources/';
         $this->accepted = xtc_image($resourcesDir . 'icon_mastercard.png') . " " . xtc_image($resourcesDir . 'icon_visa.png');
 
         $formArray[] = array(
@@ -111,7 +111,7 @@ class paymill_cc extends paymill
               . '<div class="paymill_powered">'
                    . '<div class="paymill_credits">'
                        . MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_SAVED
-                      . ' <a href="http://www.paymill.de" target="_blank">Paymill</a>'
+                      . ' <a href="http://www.paymill.de" target="_blank">PAYMILL</a>'
                    . '</div>'
                . '</div>'
            . '</div>'
@@ -124,7 +124,7 @@ class paymill_cc extends paymill
         
         $formArray[] = array(
             'title' => '',
-            'field' => '<br/><input type="hidden" value="' . ($amount+$difference_amount) * 100 . '" id="amount" name="amount"/>'
+            'field' => '<br/><input type="hidden" value="' . ($amount + $difference_amount) * 100 . '" id="amount" name="amount"/>'
         );
 
         $formArray[] = array(
