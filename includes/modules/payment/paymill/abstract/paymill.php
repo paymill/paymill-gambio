@@ -31,7 +31,7 @@ class paymill implements Services_Paymill_LoggingInterface
                     $xtPrice->xtcCalculateCurrEx($total, $order->info['currency']), $xtPrice->get_decimal_places($order->info['currency'])
             );
         }
-
+        
         $_SESSION['paymill_token'] = $_POST['paymill_token'];
     }
 
@@ -108,10 +108,15 @@ class paymill implements Services_Paymill_LoggingInterface
         $paymill->setToken((string) $_SESSION['paymill_token']);
         $paymill->setLogger($this);
         $paymill->setSource($this->version . '_' . str_replace(' ', '_', PROJECT_VERSION));
-        $paymill->setDifferentAmount((int) (string) ($this->getDifferentAmount() * 100));
+        
+        if (array_key_exists('paymill_authorized_amount', $_SESSION)) {
+            $paymill->setPreAuthAmount((int) (string) $_SESSION['paymill_authorized_amount']);
+        }
 
         $result = $paymill->processPayment();
 
+        unset($_SESSION['paymill_authorized_amount']);
+        
         if (!$result) {
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=200', 'SSL', true, false));
         } else {

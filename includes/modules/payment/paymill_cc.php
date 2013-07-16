@@ -7,7 +7,7 @@ class paymill_cc extends paymill
     function paymill_cc()
     {
         $this->code = 'paymill_cc';
-        $this->version = '1.0.6';
+        $this->version = '1.0.7';
         $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
@@ -40,7 +40,7 @@ class paymill_cc extends paymill
         if (!empty($order)) {       
             $amount = $amount + $this->getShippingTaxAmount($order);
         }
-        
+
         $today = getdate();
         for ($i = $today['year']; $i < $today['year'] + 10; $i++) {//
             $expires_year[] = array(
@@ -155,7 +155,16 @@ class paymill_cc extends paymill
 
         return $selection;
     }
-
+    
+    function pre_confirmation_check()
+    {
+        parent::pre_confirmation_check();
+        
+        if (array_key_exists('amount', $_POST)) {
+            $_SESSION['paymill_authorized_amount'] = $_POST['amount'];
+        }
+    }
+    
     function check()
     {
         if (!isset($this->_check)) {
