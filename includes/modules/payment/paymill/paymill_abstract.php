@@ -88,7 +88,10 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         global $_GET;
         $error = '';
         
-        if (isset($_GET['error'])) {
+        if (isset($_SESSION['paymill_error'])) {
+            $error = urldecode($_SESSION['paymill_error']);
+            unset($_SESSION['paymill_error']);
+        } elseif (isset($_GET['error'])) {
             $error = urldecode($_GET['error']);
         }
 
@@ -177,7 +180,8 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $_SESSION['paymill']['transaction_id'] = $this->paymentProcessor->getTransactionId();
 
         if (!$result) {
-            xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=200', 'SSL', true, false));
+            $_SESSION['paymill_error'] = 200;
+            xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code, 'SSL', true, false));
         }
         
         if ($this->fastCheckoutFlag) {

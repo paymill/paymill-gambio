@@ -59,9 +59,8 @@
 
 .paymill-error
 {
-    padding-top: 5px;
+    margin-top: 5px;
     padding: 2px 4px;
-    margin: 0px;
     border: solid 1px #FBD3C6;
     background: #FDE4E1;
     color: #CB4721;

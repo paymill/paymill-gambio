@@ -22,6 +22,7 @@ class paymill_elv extends paymill_abstract
             $this->logging = ((MODULE_PAYMENT_PAYMILL_ELV_LOGGING == 'True') ? true : false);
             $this->label = ((MODULE_PAYMENT_PAYMILL_ELV_LABEL == 'True') ? true : false);
             $this->publicKey = MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY;
+            $this->form_action_url = 'paymill_confirmation_form';
             $this->fastCheckoutFlag = ((MODULE_PAYMENT_PAYMILL_ELV_FASTCHECKOUT == 'True') ? true : false);
             $this->payments = new Services_Paymill_Payments($this->privateKey, $this->apiUrl);
             $this->clients = new Services_Paymill_Clients(trim($this->privateKey), $this->apiUrl);
@@ -112,21 +113,21 @@ class paymill_elv extends paymill_abstract
         array_push($confirmation['fields'], 
             array(
                 'title' => '<div class="paymill-label-field">' . MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER . '</div>',
-                'field' => '<span id="account-name-field"></span><span id="elv-holder-error" class="paymill-error"></span>'
+                'field' => '<span id="account-name-field"></span><div id="elv-holder-error" class="paymill-error"></div>'
             )
         );
         
         array_push($confirmation['fields'], 
             array(
                 'title' => '<div class="paymill-label-field">' . MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT . '</div>',
-                'field' => '<span id="account-number-field"></span><span id="elv-account-error" class="paymill-error"></span>'
+                'field' => '<span id="account-number-field"></span><div id="elv-account-error" class="paymill-error"></div>'
             )
         );
         
         array_push($confirmation['fields'], 
             array(
                 'title' => '<div class="paymill-label-field">' . MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE . '</div>',
-                'field' => '<span id="bank-code-field"></span><span id="elv-bankcode-error" class="paymill-error"></span>'
+                'field' => '<span id="bank-code-field"></span><div id="elv-bankcode-error" class="paymill-error"></div>'
             )
         );       
         
