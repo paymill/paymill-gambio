@@ -154,6 +154,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     {
         global $order;
         
+        $_SESSION['paymill_identifier'] = time();
         $this->paymentProcessor->setAmount((int) $_SESSION['paymill']['amount']);
         $this->paymentProcessor->setApiUrl((string) $this->apiUrl);
         $this->paymentProcessor->setCurrency((string) strtoupper($order->info['currency']));
@@ -181,6 +182,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
 
         if (!$result) {
             $_SESSION['paymill_error'] = 200;
+            unset($_SESSION['paymill_identifier']);
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code, 'SSL', true, false));
         }
         
@@ -189,6 +191,8 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         } else {
             $this->saveClient();
         }
+        
+        unset($_SESSION['paymill_identifier']);
     }
 
     function existingClient($data)
@@ -320,10 +324,19 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     function log($messageInfo, $debugInfo)
     {
         if ($this->logging) {
-            xtc_db_query("INSERT INTO `pi_paymill_logging` (debug, message) VALUES('" . xtc_db_input($debugInfo) . "', '" . xtc_db_input($messageInfo) . "')");
+            if (array_key_exists('paymill_identifier', $_SESSION)) {
+                 xtc_db_query("INSERT INTO `pi_paymill_logging` "
+                            . "(debug, message, identifier) "
+                            . "VALUES('" 
+                              . xtc_db_input($debugInfo) . "', '" 
+                              . xtc_db_input($messageInfo) . "', '" 
+                              . xtc_db_input($_SESSION['paymill_identifier']) 
+                            . "')"
+                );
+            }
         }
     }
-
+    
     function format_raw($number)
     {
         return number_format(round($number, 2), 2, '', '');
@@ -338,16 +351,18 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         
         xtc_db_query("UPDATE admin_access SET paymill_logging = '1', paymill_log = '1' WHERE customers_id= '1' OR customers_id = 'groups'");
         
+        xtc_db_query("DROP TABLE `pi_paymill_logging`");
+        
         xtc_db_query(
             "CREATE TABLE IF NOT EXISTS `pi_paymill_logging` ("
           . "`id` int(11) NOT NULL AUTO_INCREMENT,"
+          . "`identifier` text NOT NULL,"
           . "`debug` text NOT NULL,"
           . "`message` text NOT NULL,"
           . "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
           . "PRIMARY KEY (`id`)"
         . ") AUTO_INCREMENT=1"
         );
-        
         
         xtc_db_query(
             "CREATE TABLE IF NOT EXISTS `pi_paymill_fastcheckout` ("
