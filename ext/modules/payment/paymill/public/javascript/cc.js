@@ -105,7 +105,7 @@ $(document).ready(function() {
                     ccErrorFlag = false;
                 }
 
-                if (!paymill.validateCvc($("#paymill-card-cvc").val())) {
+                if (!paymill.validateCvc($("#paymill-card-cvc").val()) && paymill.cardType($("#paymill-card-number").val()).toLowerCase() !== 'maestro') {
                     $("#card-cvc-error").text(cc_cvc_number_invalid);
                     $("#card-cvc-error").css('display', 'block');
                     ccErrorFlag = false;
@@ -114,12 +114,18 @@ $(document).ready(function() {
                 if (!ccErrorFlag) {
                     return ccErrorFlag;
                 }
-
+				
+				var cvc = '000';
+				
+				if ($("#paymill-card-cvc").val() !== '') {
+					cvc = $("#paymill-card-cvc").val();
+				}
+				
                 paymill.createToken({
                     number: $("#paymill-card-number").val(),
                     exp_month: $("#paymill-card-expiry-month option:selected").val(),
                     exp_year: $("#paymill-card-expiry-year option:selected").val(),
-                    cvc: $("#paymill-card-cvc").val(),
+                    cvc: cvc,
                     amount_int: paymill_total,
                     currency: paymill_currency,
                     cardholder: $("#paymill-card-owner").val()
