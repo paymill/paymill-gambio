@@ -99,17 +99,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             $error = urldecode($_GET['error']);
         }
 
-        switch ($error) {
-            case '100':
-                $error_text['error'] = utf8_decode(MODULE_PAYMENT_PAYMILL_TEXT_ERROR_100);
-                break;
-            case '200':
-                $error_text['error'] = utf8_decode(MODULE_PAYMENT_PAYMILL_TEXT_ERROR_200);
-                break;
-            case '300':
-                $error_text['error'] = utf8_decode(MODULE_PAYMENT_PAYMILL_TEXT_ERROR_300);
-                break;
-        }
+        $error_text['error'] = utf8_decode(constant("PAYMILL_".$error));
         
         return $error_text;
     }
@@ -185,7 +175,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $_SESSION['paymill']['transaction_id'] = $this->paymentProcessor->getTransactionId();
 
         if (!$result) {
-            $_SESSION['paymill_error'] = 200;
+            $_SESSION['paymill_error'] = $this->paymentProcessor->getErrorCode();
             unset($_SESSION['paymill_identifier']);
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code, 'SSL', true, false));
         }
