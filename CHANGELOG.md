@@ -8,7 +8,7 @@
 - Added special handling for maestro credit cards without CVC
 - Redesigned Logging
 - Payments will no longer be selectable during checkout if there are no Keys available in the Backend
-- Fixed muldiple minor bugs
+- Fixed multiple minor bugs
 
 ##1.2.1
 - Fixed a bug regarding credit card icon behavior
