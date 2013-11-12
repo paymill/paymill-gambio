@@ -99,7 +99,9 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             $error = urldecode($_GET['error']);
         }
 
-        $error_text['error'] = utf8_decode(constant("PAYMILL_".$error));
+        if($error !== ''){
+            $error_text['error'] = utf8_decode(constant($error));
+        }
         
         return $error_text;
     }
@@ -175,9 +177,10 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $_SESSION['paymill']['transaction_id'] = $this->paymentProcessor->getTransactionId();
 
         if (!$result) {
-            $_SESSION['paymill_error'] = $this->paymentProcessor->getErrorCode();
+            $errorCode = 'PAYMILL_'.$this->paymentProcessor->getErrorCode();
+            $_SESSION['paymill_error'] = $errorCode;
             unset($_SESSION['paymill_identifier']);
-            xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code, 'SSL', true, false));
+            xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code . '&error='.$errorCode, 'SSL', true, false));
         }
         
         if ($this->fastCheckoutFlag) {
