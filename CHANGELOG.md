@@ -3,6 +3,7 @@
 - Fixed a bug causing crashes on installation if no earlier version has been installed
 - Added Version number to the backend configuration
 - Added additional validation for fast checkout
+- Removed PAYMILL label
 
 ##1.3.1
 - Added improved Error Feedback
