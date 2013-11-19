@@ -10,8 +10,7 @@ class paymill_cc extends paymill_abstract
         global $order;
 
         $this->code = 'paymill_cc';
-        $this->version = '1.3.0';
-        $this->api_version = '2';
+        $this->description = "<p style='font-weight: bold; text-align: center'>$this->version</p>";
         $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         
@@ -31,7 +30,7 @@ class paymill_cc extends paymill_abstract
             }
             
             if ($this->logging) {
-                $this->description = '<a href="' . xtc_href_link('paymill_logging.php') . '">PAYMILL Log</a>';
+                $this->description .= '<p><a href="' . xtc_href_link('paymill_logging.php') . '">PAYMILL Log</a></p>';
             }
         }
 
