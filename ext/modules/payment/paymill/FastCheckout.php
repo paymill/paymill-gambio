@@ -1,5 +1,5 @@
 <?php
-
+require_once(DIR_FS_CATALOG . 'ext/modules/payment/paymill/lib/Services/Paymill/Payments.php');
 class FastCheckout
 {
     private $_fastCheckoutFlag = false;
@@ -68,18 +68,29 @@ class FastCheckout
         
         return xtc_db_fetch_array(xtc_db_query($sql));
     }
-    
+
+    private function hasPaymentId($paymentType, $userId)
+    {
+        $result = false;
+        $privateKey = trim(MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY);
+        $apiUrl = 'https://api.paymill.com/v2/';
+        $data = $this->loadFastCheckoutData($userId);
+        if($data && array_key_exists('paymentID_'.$paymentType, $data) && !empty($data['paymentID_'.$paymentType])){
+            $payment = new Services_Paymill_Payments($privateKey, $apiUrl);
+            $paymentData = $payment->getOne($data['paymentID_'.$paymentType]);
+            $result = $paymentData && array_key_exists('id', $paymentData) && !empty($data['id']);
+        }
+        return $result;
+    }
+
     public function hasElvPaymentId($userId)
     {
-        $data = $this->loadFastCheckoutData($userId);
-        return $data && array_key_exists('paymentID_ELV', $data) && !empty($data['paymentID_ELV']);
+        return $this->hasPaymentId("ELV", $userId);
     }
-    
+
     public function hasCcPaymentId($userId)
     {
-        $data = $this->loadFastCheckoutData($userId);
-        
-        return $data && array_key_exists('paymentID_CC', $data) && !empty($data['paymentID_CC']);
+        return $this->hasPaymentId("CC", $userId);
     }
 
     public function setFastCheckoutFlag($fastCheckoutFlag)
