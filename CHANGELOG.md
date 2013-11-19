@@ -1,4 +1,8 @@
 #Release Notes
+##1.4.0
+- Fixed a bug causing crashes on installation if no earlier version has been installed
+- Added Version number to the backend configuration
+
 ##1.3.1
 - Added improved Error Feedback
 - Added Changelog
