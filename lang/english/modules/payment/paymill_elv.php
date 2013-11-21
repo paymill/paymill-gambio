@@ -70,4 +70,10 @@ define('PAYMILL_50500', 'General timeout.');
 define('PAYMILL_50501', 'Timeout on side of the acquirer.');
 define('PAYMILL_50502', 'Risk management transaction timeout.');
 define('PAYMILL_50600', 'Duplicate transaction.');
+define('MODULE_PAYMENT_PAYMILL_ELV_SEPA_TITLE','Configure Payment Form for IBAN/BIC');
+define('MODULE_PAYMENT_PAYMILL_ELV_SEPA_DESC','Currently only available from Germany');
+define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BIC','BIC');
+define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_IBAN','IBAN');
+define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_IBAN_INVALID','Invalid IBAN');
+define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BIC_INVALID','Invalid BIC');
 ?>

@@ -4,6 +4,7 @@
 - Added Version number to the backend configuration
 - Added additional validation for fast checkout
 - Removed PAYMILL label
+- Implemented optional SEPA direct debit form. only payments from germany are supported
 
 ##1.3.1
 - Added improved Error Feedback
