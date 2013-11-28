@@ -1,4 +1,5 @@
 <?php
+require_once(DIR_FS_CATALOG . 'ext/modules/payment/paymill/lib/Services/Paymill/Clients.php');
 require_once(DIR_FS_CATALOG . 'ext/modules/payment/paymill/lib/Services/Paymill/Payments.php');
 class FastCheckout
 {
@@ -39,7 +40,7 @@ class FastCheckout
         if ($this->_canUpdate($userId)) {
             $sql = "UPDATE `pi_paymill_fastcheckout`SET `paymentID_CC` = '$newPaymentId' WHERE `userID` = '$userId'";
         } else {
-            $sql = "INSERT INTO `pi_paymill_fastcheckout` (`userID`, `clientID`, `paymentID_CC`) VALUES ('$userId', '$newClientId', '$newPaymentId')";
+            $sql = "REPLACE INTO `pi_paymill_fastcheckout` (`userID`, `clientID`, `paymentID_CC`) VALUES ('$userId', '$newClientId', '$newPaymentId')";
         }
 
         xtc_db_query($sql);
@@ -58,14 +59,20 @@ class FastCheckout
     
     private function _canUpdate($userId)
     {
+        $privateKey = trim(MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY);
+        $apiUrl = 'https://api.paymill.com/v2/';
         $data = $this->loadFastCheckoutData($userId);
-        return $data;
+
+        $client = new Services_Paymill_Clients($privateKey, $apiUrl);
+        $clientData = $client->getOne($data['clientID']);
+        $result = $clientData && array_key_exists('id', $clientData) && !empty($clientData['id']);
+        return $result ? $data : false;
     }
     
     public function loadFastCheckoutData($userId)
     {
         $sql = "SELECT * FROM `pi_paymill_fastcheckout` WHERE `userID` = '$userId'";
-        
+
         return xtc_db_fetch_array(xtc_db_query($sql));
     }
 
@@ -75,10 +82,14 @@ class FastCheckout
         $privateKey = trim(MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY);
         $apiUrl = 'https://api.paymill.com/v2/';
         $data = $this->loadFastCheckoutData($userId);
+
         if($data && array_key_exists($paymentType, $data) && !empty($data[$paymentType])){
+            $client = new Services_Paymill_Clients($privateKey, $apiUrl);
+            $clientData = $client->getOne($data['clientID']);
             $payment = new Services_Paymill_Payments($privateKey, $apiUrl);
             $paymentData = $payment->getOne($data[$paymentType]);
-            $result = $paymentData && array_key_exists('id', $paymentData) && !empty($paymentData['id']);
+            $result = $clientData && array_key_exists('id', $clientData) && !empty($clientData['id'])
+                   && $paymentData && array_key_exists('id', $paymentData) && !empty($paymentData['id']);
         }
         return $result;
     }
