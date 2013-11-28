@@ -86,4 +86,18 @@ define('PAYMILL_50500', 'Generelle Zeitüberschreitung.');
 define('PAYMILL_50501', 'Die Schnittstelle zum Acquirer reagiert nicht daher bekommen wir keine Antwort ob die Transaktion erfolgreich durchgelaufen ist.');
 define('PAYMILL_50502', 'Es gibt eine Zeitüberschreitung bei der Risiko-Management Transaktion.');
 define('PAYMILL_50600', 'Doppelte Transaktion.');
+define('PAYMILL_internal_server_error', 'Kommunikation mit dem PSP fehlgeschlagen');
+define('PAYMILL_invalid_public_key', ' Public Key ungültig');
+define('PAYMILL_invalid_payment_data', 'Für diesen Zahlungsmodus, Kreditkartentyp, Währung oder Land nicht zugelassen');
+define('PAYMILL_unknown_error', 'Unbekannter Fehler');
+define('PAYMILL_3ds_cancelled', '3-D Secure Prozess wurde vom User abgebrochen');
+define('PAYMILL_field_invalid_card_number', 'Fehlende oder ungültige Kreditkartennummer');
+define('PAYMILL_field_invalid_card_exp_year', 'Fehlendes oder ungültiges Ablaufjahr');
+define('PAYMILL_field_invalid_card_exp_month', 'Fehlender oder ungültiger Ablaufmonat');
+define('PAYMILL_field_invalid_card_exp', 'Karte nicht mehr gültig oder noch nicht gültig');
+define('PAYMILL_field_invalid_card_cvc', 'Ungültige Prüfziffer');
+define('PAYMILL_field_invalid_card_holder', 'Ungültiger Karteninhaber');
+define('PAYMILL_field_invalid_amount_int', 'Fehlender oder ungültiger Betrag für 3-D Secure');
+define('PAYMILL_field_field_invalid_amount', 'Fehlender oder ungültiger Betrag für 3-D Secure');
+define('PAYMILL_field_field_field_invalid_currency', 'Fehlende oder ungültige Währung für 3-D Secure');
 ?>

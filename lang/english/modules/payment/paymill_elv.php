@@ -76,4 +76,16 @@ define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BIC','BIC');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_IBAN','IBAN');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_IBAN_INVALID','Invalid IBAN');
 define('MODULE_PAYMENT_PAYMILL_ELV_TEXT_BIC_INVALID','Invalid BIC');
+define('PAYMILL_internal_server_error', 'Communication with PSP failed');
+define('PAYMILL_invalid_public_key', 'Public Key is invalid');
+define('PAYMILL_invalid_payment_data', 'Payment mode, card type, currency or country not accepted.');
+define('PAYMILL_unknown_error', 'Unknown Error');
+define('PAYMILL_field_invalid_account_number', 'Invalid or missing account number');
+define('PAYMILL_field_invalid_account_holder', 'Invalid or missing account holder');
+define('PAYMILL_field_invalid_bank_code', 'Invalid or missing bank code');
+define('PAYMILL_field_invalid_iban', 'Invalid or missing IBAN');
+define('PAYMILL_field_invalid_bic', 'Invalid or missing BIC');
+define('PAYMILL_field_invalid_country', 'Missing or not supported country');
+define('field_invalid_bank_data', 'Bank data does not match');
+
 ?>
