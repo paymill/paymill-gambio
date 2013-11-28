@@ -100,4 +100,5 @@ define('PAYMILL_field_invalid_card_holder', 'Ungültiger Karteninhaber');
 define('PAYMILL_field_invalid_amount_int', 'Fehlender oder ungültiger Betrag für 3-D Secure');
 define('PAYMILL_field_field_invalid_amount', 'Fehlender oder ungültiger Betrag für 3-D Secure');
 define('PAYMILL_field_field_field_invalid_currency', 'Fehlende oder ungültige Währung für 3-D Secure');
+define('PAYMILL_0', 'Während der Zahlung ist ein Fehler aufgetreten.');
 ?>

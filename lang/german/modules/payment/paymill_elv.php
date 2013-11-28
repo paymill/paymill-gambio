@@ -93,4 +93,5 @@ define('PAYMILL_field_invalid_iban', 'Fehlende oder ungültige IBAN');
 define('PAYMILL_field_invalid_bic', 'Fehlende oder ungültiger BIC');
 define('PAYMILL_field_invalid_country', 'Fehlendes oder nicht unterstütztes Land');
 define('PAYMILL_field_invalid_bank_data', 'Fehlende oder ungültige Bankdatenkombination');
+define('PAYMILL_0', 'Während der Zahlung ist ein Fehler aufgetreten.');
 ?>

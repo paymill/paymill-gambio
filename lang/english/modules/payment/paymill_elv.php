@@ -87,5 +87,5 @@ define('PAYMILL_field_invalid_iban', 'Invalid or missing IBAN');
 define('PAYMILL_field_invalid_bic', 'Invalid or missing BIC');
 define('PAYMILL_field_invalid_country', 'Missing or not supported country');
 define('PAYMILL_field_invalid_bank_data', 'Bank data does not match');
-
+define('PAYMILL_0', 'There was an error processing the payment.');
 ?>

@@ -100,4 +100,5 @@ define('PAYMILL_field_invalid_card_holder', 'Invalid card holder');
 define('PAYMILL_field_invalid_amount_int', 'Invalid or missing amount for 3-D Secure');
 define('PAYMILL_field_field_invalid_amount', 'Invalid or missing amount for 3-D Secure');
 define('PAYMILL_field_field_field_invalid_currency', 'Invalid or missing currency for 3-D Secure');
+define('PAYMILL_0', 'There was an error processing the payment.');
 ?>
