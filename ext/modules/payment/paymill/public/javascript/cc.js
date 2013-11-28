@@ -174,7 +174,8 @@ $(document).ready(function() {
         isCcSubmitted = true;
         if (error) {
             isCcSubmitted = false;
-            window.location = $("<div/>").html(checkout_payment_link).text();
+            console.log(error);
+            window.location = $("<div/>").html(checkout_payment_link + error.apierror).text();
         } else {
             $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />');
             $('#paymill_form').submit();
