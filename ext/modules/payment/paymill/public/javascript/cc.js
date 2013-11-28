@@ -36,7 +36,8 @@ $(document).ready(function() {
     var cssClass = "paymill-card-number-";
 	
     $('#paymill-card-number').keyup(function() {
-		
+        $('#paymill-card-number').removeClass();
+        $('#paymill-card-number').addClass('form-row-paymill');
         switch (paymill.cardType($('#paymill-card-number').val()).toLowerCase()) {
             case 'visa':
                 $('#paymill-card-number').removeClass();
@@ -141,6 +142,8 @@ $(document).ready(function() {
     $('#paymill-card-number').focus(function() {
         paymill_cc_fastcheckout = false;
         $('#paymill-card-number').val('');
+        $('#paymill-card-number').removeClass();
+        $('#paymill-card-number').addClass('form-row-paymill');
     });
 
     $('#paymill-card-expiry-month').focus(function() {
