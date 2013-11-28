@@ -19,7 +19,7 @@ $(document).ready(function() {
         $('#bank-code-field').html('<input type="text" value="' + paymill_elv_code + '" id="paymill-bank-code" class="form-row-paymill" />');
     }
 
-    $('#checkout_confirmation').submit(function(event) {
+    $('form[action="paymill_confirmation_form"]').submit(function (event) {
         event.preventDefault();
         if (!isElvSubmitted) {
             if (!paymill_elv_fastcheckout) {
@@ -135,7 +135,7 @@ $(document).ready(function() {
         if (error) {
             isElvSubmitted = false;
             console.log(error);
-            window.location = checkout_payment_link;
+            window.location = $("<div/>").html(checkout_payment_link + error.apierror).text();
         } else {
             $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />').submit();
             return false;
