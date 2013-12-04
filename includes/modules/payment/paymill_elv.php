@@ -173,7 +173,7 @@ class paymill_elv extends paymill_abstract
         return array(
             'MODULE_PAYMENT_PAYMILL_ELV_STATUS',
             'MODULE_PAYMENT_PAYMILL_ELV_FASTCHECKOUT',
-            'MODULE_PAYMENT_PAYMILL_ELV_SEPA',
+//            'MODULE_PAYMENT_PAYMILL_ELV_SEPA', //Disabled SEPA option
             'MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY',
             'MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID',

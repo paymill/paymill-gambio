@@ -5,6 +5,7 @@
 - Added additional validation for fast checkout
 - Removed PAYMILL label
 - Implemented optional SEPA direct debit form. only payments from germany are supported
+- Disabled SEPA Option
 
 ##1.3.1
 - Added improved Error Feedback
