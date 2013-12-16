@@ -36,7 +36,6 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
 
     function paymill_abstract()
     {
-        $this->fastCheckout = new FastCheckout();
         $this->paymentProcessor = new Services_Paymill_PaymentProcessor();
     }
     
@@ -197,18 +196,19 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     function existingClient($data)
     {
         global $order;
-        
-        $client = $this->clients->getOne($data['clientID']);
-        if ($client['email'] !== $order->customer['email_address']) {
-            $this->clients->update(
-                array(
-                    'id' => $data['clientID'],
-                    'email' => $order->customer['email_address']
-                )
-            );
-        }
+        if($this->fastCheckout->hasClient($_SESSION['customer_id'])){
+            $client = $this->clients->getOne($data['clientID']);
+            if ($client['email'] !== $order->customer['email_address']) {
+                $this->clients->update(
+                              array(
+                                   'id' => $data['clientID'],
+                                   'email' => $order->customer['email_address']
+                              )
+                );
+            }
 
-        $this->paymentProcessor->setClientId($client['id']);
+            $this->paymentProcessor->setClientId($client['id']);
+        }
     }
     
     function fastCheckout()
