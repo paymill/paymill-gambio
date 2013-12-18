@@ -20,6 +20,7 @@ class paymill_cc extends paymill_abstract
             $this->sort_order = MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER;
             $this->privateKey = trim(MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY);
             $this->logging = ((MODULE_PAYMENT_PAYMILL_CC_LOGGING == 'True') ? true : false);
+            $this->webHooksEnabled = ((MODULE_PAYMENT_PAYMILL_CC_WEBHOOKS == 'True') ? true : false);
             $this->publicKey = MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY;
             $this->form_action_url = 'paymill_confirmation_form';
             $this->fastCheckoutFlag = ((MODULE_PAYMENT_PAYMILL_CC_FASTCHECKOUT == 'True') ? true : false);
@@ -32,6 +33,12 @@ class paymill_cc extends paymill_abstract
             if ($this->logging) {
                 $this->description .= '<p><a href="' . xtc_href_link('paymill_logging.php') . '">PAYMILL Log</a></p>';
             }
+
+            if ($this->webHooksEnabled) {
+                $type = 'CC';
+                $this->displayWebhookButton($type);
+            }
+
         }
 
         if (is_object($order)) $this->update_status();
@@ -90,11 +97,10 @@ class paymill_cc extends paymill_abstract
 
         for ($i=$today['year']; $i < $today['year']+10; $i++) {
             $years_array[$i] = array(strftime('%Y', mktime(0, 0, 0, 1 , 1, $i)), strftime('%Y',mktime(0, 0, 0, 1, 1, $i)));
-        } 
-        
-        $payment = $this->getPayment($_SESSION['customer_id']);
-        
+        }
+
         $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
+        $payment = $this->getPayment($_SESSION['customer_id']);
         
         $script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>'
                 . '<script type="text/javascript">'
@@ -176,6 +182,7 @@ class paymill_cc extends paymill_abstract
         
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_FASTCHECKOUT', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_WEBHOOKS', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY', '0', '6', '0', now())");
@@ -191,6 +198,7 @@ class paymill_cc extends paymill_abstract
         return array(
             'MODULE_PAYMENT_PAYMILL_CC_STATUS',
             'MODULE_PAYMENT_PAYMILL_CC_FASTCHECKOUT',
+            'MODULE_PAYMENT_PAYMILL_CC_WEBHOOKS',
             'MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY',
             'MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID',
