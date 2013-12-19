@@ -1,7 +1,4 @@
 <?php
-require_once(DIR_FS_CATALOG . 'ext/modules/payment/paymill/lib/Services/Paymill/Clients.php');
-require_once(DIR_FS_CATALOG . 'ext/modules/payment/paymill/lib/Services/Paymill/Payments.php');
-
 abstract class FastCheckoutAbstract
 {
     var $_fastCheckoutFlag = false;
