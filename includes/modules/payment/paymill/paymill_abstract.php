@@ -38,6 +38,8 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
 
     function paymill_abstract()
     {
+        $this->description = '';
+        $this->description = "<p style='font-weight: bold; text-align: center'>$this->version</p>";
         $this->paymentProcessor = new Services_Paymill_PaymentProcessor();
     }
     
@@ -382,6 +384,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             . "`id` varchar(100),"
             . "`url` varchar(150),"
             . "`mode` varchar(100),"
+            . "`type` varchar(100),"
             . "`created_at` varchar(100),"
             . "PRIMARY KEY (`id`)"
             . ")"
@@ -405,7 +408,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         }
 
         $webhooks = new WebHooks($this->privateKey);
-        $hooks = $webhooks->loadAllWebHooks();
+        $hooks = $webhooks->loadAllWebHooks($type);
         $action = empty($hooks) ? 'register' : 'remove';
         $buttonAction = 'CREATE';
         if($action === 'remove'){

@@ -11,7 +11,6 @@ class paymill_cc extends paymill_abstract
         global $order;
 
         $this->code = 'paymill_cc';
-        $this->description = "<p style='font-weight: bold; text-align: center'>$this->version</p>";
         $this->title = MODULE_PAYMENT_PAYMILL_CC_TEXT_TITLE;
         $this->public_title = MODULE_PAYMENT_PAYMILL_CC_TEXT_PUBLIC_TITLE;
         
