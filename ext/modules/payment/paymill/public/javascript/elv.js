@@ -19,9 +19,9 @@ $(document).ready(function () {
                 hideErrorBoxes();
                 var elvErrorFlag = true;
 
-                if (false === paymill.validateAccountNumber($('#paymill-account-number').val())) {
-                    $("#elv-account-error").text(elv_account_number_invalid);
-                    $("#elv-account-error").css('display', 'block');
+                if ($('#paymill-bank-owner').val() === "") {
+                    $("#elv-holder-error").text(elv_bank_owner_invalid);
+                    $("#elv-holder-error").css('display', 'block');
                     elvErrorFlag = false;
                 }
 
@@ -36,8 +36,8 @@ $(document).ready(function () {
                 }
 
                 PaymillCreateElvToken(getSepaState());
-                return false;
 
+                return false;
             } else {
                 $('#paymill_form').html('<input type="hidden" name="paymill_token" value="dummyToken" />').submit();
             }
@@ -75,12 +75,13 @@ function PaymillValidateOldElvForm()
         $("#elv-bankcode-error").css('display', 'block');
         elvErrorFlag = false;
     }
-
-    if ($('#paymill-bank-owner').val() === "") {
-        $("#elv-holder-error").text(elv_bank_owner_invalid);
-        $("#elv-holder-error").css('display', 'block');
+    if (false === paymill.validateAccountNumber($('#paymill-account-number').val())) {
+        $("#elv-account-error").text(elv_account_number_invalid);
+        $("#elv-account-error").css('display', 'block');
         elvErrorFlag = false;
     }
+
+
 
     return elvErrorFlag;
 }
@@ -137,18 +138,16 @@ function PaymillCreateElvToken(SEPA)
 {
     if(SEPA){ //Sepa Form active
         paymill.createToken({
-            iban: $('#paymill-iban').val(),
-            bic: $('#paymill-bic').val(),
+            iban:          $('#paymill-iban').val(),
+            bic:           $('#paymill-bic').val(),
             accountholder: $('#paymill-bank-owner').val()
         }, PaymillElvResponseHandler);
-        return false;
     } else {
         paymill.createToken({
-            number: $('#paymill-account-number').val(),
-            bank: $('#paymill-bank-code').val(),
+            number:        $('#paymill-account-number').val(),
+            bank:          $('#paymill-bank-code').val(),
             accountholder: $('#paymill-bank-owner').val()
         }, PaymillElvResponseHandler);
-        return false;
     }
 }
 
@@ -177,7 +176,6 @@ function PaymillElvResponseHandler(error, result)
         isElvSubmitted = false;
         console.log(error);
         window.location = $("<div/>").html(checkout_payment_link + error.apierror).text();
-        return false;
     } else {
         $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />').submit();
         return false;
