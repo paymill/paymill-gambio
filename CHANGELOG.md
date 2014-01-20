@@ -1,4 +1,11 @@
 #Release Notes
+##1.5.0
+* Added SEPA Payment Form for german Direct Debit
+* Added WebHooks. WebHooks will automatically synch your shops order states on refund or chargeback events
+* Updated Fast Checkout
+* Removed Paymill Label
+* Fixed Log view
+
 ##1.4.0
 - Fixed a bug causing crashes on installation if no earlier version has been installed
 - Added Version number to the backend configuration
