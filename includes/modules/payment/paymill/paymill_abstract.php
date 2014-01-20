@@ -403,7 +403,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
      * @param String $type Can be either CC or ELV
      */
     function displayWebhookButton($type){
-        if(empty($this->privateKey) || $this->privateKey == 0){
+        if(empty($this->privateKey)){
             return;
         }
 
