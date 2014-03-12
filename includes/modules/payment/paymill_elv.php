@@ -92,8 +92,9 @@ class paymill_elv extends paymill_abstract
                 . 'var paymill_elv_fastcheckout = ' . ($this->fastCheckout->canCustomerFastCheckoutElv($_SESSION['customer_id']) ? 'true' : 'false') . ';'
                 . 'var checkout_payment_link = "' . xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=', 'SSL', true, false) . '";'
                 . '</script>'
+                . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/Iban.js"></script>'
                 . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/elv.js"></script>';
-        
+
         array_push($confirmation['fields'], 
             array(
                 'field' => $script
