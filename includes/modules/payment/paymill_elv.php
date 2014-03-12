@@ -71,7 +71,12 @@ class paymill_elv extends paymill_abstract
         
         $confirmation = parent::confirmation();
 
-        $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
+        if($_SESSION['customers_status']['customers_status_id'] === "1"){
+            $this->fastCheckout->setFastCheckoutFlag(false);
+        } else {
+            $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
+        }
+        
         $payment = $this->getPayment($_SESSION['customer_id']);
         
         $script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>'

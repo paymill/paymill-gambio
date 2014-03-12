@@ -98,7 +98,14 @@ class paymill_cc extends paymill_abstract
             $years_array[$i] = array(strftime('%Y', mktime(0, 0, 0, 1 , 1, $i)), strftime('%Y',mktime(0, 0, 0, 1, 1, $i)));
         }
 
-        $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
+
+        if($_SESSION['customers_status']['customers_status_id'] === "1"){
+            $this->fastCheckout->setFastCheckoutFlag(false);
+        } else {
+            $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
+        }
+
+
         $payment = $this->getPayment($_SESSION['customer_id']);
 
         $script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>'
