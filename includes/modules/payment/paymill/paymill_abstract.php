@@ -415,7 +415,6 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         }
         $buttonText = constant('MODULE_PAYMENT_PAYMILL_'.$type.'_WEBHOOKS_LINK_'.$buttonAction);
 
-        $this->description .= '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>';
         $this->description .= '<script type="text/javascript" src="javascript/paymill_button_webhook.js"></script>';
         $this->description .= '<p><form id="register_webhooks" method="POST">';
         $parameters         = 'action='.$action.'&type='.$type;
