@@ -46,6 +46,7 @@ class paymill_cc extends paymill_abstract
     function selection()
     {
         $selection = parent::selection();
+        $selection['module'] .= '<div>' . $this->getBrandLogos() . '</div>';
         return $selection;
     }
 
@@ -69,6 +70,70 @@ class paymill_cc extends paymill_abstract
 
         return $payment;
     }
+    
+    function getBrandLogos()
+    {
+        $logos = '';
+        if (!((MODULE_PAYMENT_PAYMILL_CC_AMEX === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_CARTASI === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_DANKORT === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_CARTEBLEUE === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_DISCOVER === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_DINERSCLUB === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_UNIONPAY === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_MAESTRO === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_JCB === 'False') 
+            && (MODULE_PAYMENT_PAYMILL_CC_MASTERCARD === 'False')
+            && (MODULE_PAYMENT_PAYMILL_CC_VISA === 'False'))
+        ) {
+            if (MODULE_PAYMENT_PAYMILL_CC_AMEX === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_amex.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_CARTASI === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_carta-si.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_DANKORT === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_dankort.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_CARTEBLEUE === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_carte-bleue.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_DISCOVER === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_discover.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_DINERSCLUB === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_dinersclub.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_UNIONPAY === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_unionpay.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_MAESTRO === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_maestro.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_JCB === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_jcb.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_MASTERCARD === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_mastercard.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+            if (MODULE_PAYMENT_PAYMILL_CC_VISA === 'True') {
+                $logos .= '<img src="ext/modules/payment/paymill/public/images/32x20_visa.png" alt="American Express" style="margin-right: 1px;"/>';
+            }
+            
+        }
+        
+        return $logos;
+    }
 
 
     function confirmation()
@@ -76,6 +141,12 @@ class paymill_cc extends paymill_abstract
         global $order;
 
         $confirmation = parent::confirmation();
+        array_push($confirmation['fields'], 
+            array(
+                'title' => '<div style="width: 500px;">' . $this->getBrandLogos() . '</div>',
+                'field' => ''
+            )
+        );
 
         $months_array     = array();
         $months_array[1]  = array('01', MODULE_PAYMENT_PAYMILL_CC_TEXT_MONTH_JANUARY);
@@ -128,6 +199,19 @@ class paymill_cc extends paymill_abstract
                     . 'var paymill_cc_expiry_year_val = "' . $payment['expire_year'] . '";'
                     . 'var paymill_cc_fastcheckout = ' . ($this->fastCheckout->canCustomerFastCheckoutCc($_SESSION['customer_id']) ? 'true' : 'false') . ';'
                     . 'var checkout_payment_link = "' . xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=', 'SSL', true, false) . '";'
+                    . 'var logos =  new Array();'
+                    . "logos['amex'] = " . strtolower(MODULE_PAYMENT_PAYMILL_CC_AMEX) . ";"
+                    . "logos['carta-si'] = " . strtolower(MODULE_PAYMENT_PAYMILL_CC_CARTASI) . ";"
+                    . "logos['dankort'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_DANKORT) . ";"
+                    . "logos['carte-bleue'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_CARTEBLEUE) . ";"
+                    . "logos['discover'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_DISCOVER) . ";"
+                    . "logos['diners-club'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_DINERSCLUB) . ";"
+                    . "logos['china-unionpay'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_UNIONPAY) . ";"
+                    . "logos['maestro'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_MAESTRO) . ";"
+                    . "logos['jcb'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_JCB) . ";"
+                    . "logos['mastercard'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_MASTERCARD) . ";"
+                    . "logos['visa'] =  " . strtolower(MODULE_PAYMENT_PAYMILL_CC_VISA) . ";"
+                    . "var allBrandsDisabled = !logos['amex'] && !logos['carta-si'] && !logos['dankort'] && !logos['carte-bleue'] && !logos['discover'] && !logos['diners-club'] && !logos['china-unionpay'] && !logos['maestro'] && !logos['jcb'] && !logos['mastercard'] && !logos['visa'];"
                 . '</script>'
                 . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/BrandDetection.js"></script>'
                 . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/cc.js"></script>';
@@ -194,6 +278,19 @@ class paymill_cc extends paymill_abstract
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_SORT_ORDER', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY', '0', '6', '0', now())");
+
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_AMEX', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_VISA', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_UNIONPAY', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_MASTERCARD', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_JCB', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_DISCOVER', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_DINERSCLUB', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_CARTEBLEUE', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_DANKORT', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_CARTASI', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_MAESTRO', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
+        
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_CC_LOGGING', 'False', '6', '0', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_CC_TRANSACTION_ORDER_STATUS_ID', '" . $this->getOrderStatusTransactionID() . "', '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
@@ -207,6 +304,17 @@ class paymill_cc extends paymill_abstract
             'MODULE_PAYMENT_PAYMILL_CC_STATUS',
             'MODULE_PAYMENT_PAYMILL_CC_FASTCHECKOUT',
             'MODULE_PAYMENT_PAYMILL_CC_WEBHOOKS',
+            'MODULE_PAYMENT_PAYMILL_CC_AMEX',
+            'MODULE_PAYMENT_PAYMILL_CC_VISA',
+            'MODULE_PAYMENT_PAYMILL_CC_UNIONPAY',
+            'MODULE_PAYMENT_PAYMILL_CC_MASTERCARD',
+            'MODULE_PAYMENT_PAYMILL_CC_JCB',
+            'MODULE_PAYMENT_PAYMILL_CC_DISCOVER',
+            'MODULE_PAYMENT_PAYMILL_CC_DINERSCLUB',
+            'MODULE_PAYMENT_PAYMILL_CC_CARTEBLEUE',
+            'MODULE_PAYMENT_PAYMILL_CC_DANKORT',
+            'MODULE_PAYMENT_PAYMILL_CC_CARTASI',
+            'MODULE_PAYMENT_PAYMILL_CC_MAESTRO',
             'MODULE_PAYMENT_PAYMILL_CC_PRIVATEKEY',
             'MODULE_PAYMENT_PAYMILL_CC_PUBLICKEY',
             'MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID',
