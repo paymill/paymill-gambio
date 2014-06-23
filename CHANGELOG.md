@@ -1,4 +1,8 @@
 #Release Notes
+
+##1.7.0
+ * add brand logos with on/off setting per brand for the selection page and over the payment form
+
 ##1.6.0
 * Added Language Support for german, english, french, italian, spanish and portuguese
 * Added improved early pan detection
