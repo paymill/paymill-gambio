@@ -5,6 +5,8 @@
  * payment form fields now don't autocomplete the content, also the cvc field is now a password field
  * build a payment form which accept normal elv and sepa payments
  * sepa collecting date is now configurable and displayed on the order and invoice mail
+ * support lightbox checkout feature
+ * limit the description to 128 signs all other signs be cut off
 
 ##1.6.0
 * Added Language Support for german, english, french, italian, spanish and portuguese

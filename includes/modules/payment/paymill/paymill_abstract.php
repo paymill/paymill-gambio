@@ -159,7 +159,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $this->paymentProcessor->setAmount((int) $_SESSION['paymill']['amount']);
         $this->paymentProcessor->setApiUrl((string) $this->apiUrl);
         $this->paymentProcessor->setCurrency((string) strtoupper($order->info['currency']));
-        $this->paymentProcessor->setDescription(utf8_encode((string) STORE_NAME . ' ' . $order->customer['lastname'] . ', ' . $order->customer['firstname']));
+        $this->paymentProcessor->setDescription($this->getDescription(utf8_encode((string) STORE_NAME . ' ' . $order->customer['lastname'] . ', ' . $order->customer['firstname'])));
         $this->paymentProcessor->setEmail((string) $order->customer['email_address']);
         $this->paymentProcessor->setName($order->customer['lastname'] . ', ' . $order->customer['firstname']);
         $this->paymentProcessor->setPrivateKey((string) $this->privateKey);
@@ -195,6 +195,11 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         }
         
         unset($_SESSION['paymill_identifier']);
+    }
+    
+    function getDescription($text)
+    {
+        return  substr($text, 0, 127);
     }
 
     function existingClient($data)
@@ -401,7 +406,8 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
      * Displays the register/remove Webhook button in the payment config.
      * @param String $type Can be either CC or ELV
      */
-    function displayWebhookButton($type){
+    function displayWebhookButton($type)
+    {
         if(empty($this->privateKey)){
             return;
         }
@@ -434,7 +440,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $description = 'OrderID: ' . $orderId . ' ' . $transaction['description'];
         $transactions->update(array(
                                    'id'          => $id,
-                                   'description' => $description
+                                   'description' => $this->getDescription($description)
                               ));
 
     }
