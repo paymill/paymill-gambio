@@ -92,4 +92,7 @@ define("PAYMILL_0", "W&auml;hrend Ihrer Zahlung ist ein Fehler aufgetreten.");
 define("MODULE_PAYMENT_PAYMILL_ELV_TEXT_TITLE", "PAYMILL ELV");
 define("TEXT_INFO_API_VERSION", "API Version");
 define("MODULE_PAYMENT_PAYMILL_ELV_STATUS_DESC", "");
+define("SEPA_DRAWN_TEXT", "Die Lastschrift wird zu dem folgenden Termin eingezogen: ");
+define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_TITLE", "Tage bis zum Einzug");
+define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_DESC", "");
 ?>

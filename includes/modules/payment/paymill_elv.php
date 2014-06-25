@@ -64,6 +64,26 @@ class paymill_elv extends paymill_abstract
         
         return $payment;
     }
+        
+    function before_process()
+    {
+        global $order;
+        parent::before_process();
+        
+        $days = 7;
+        
+        if (is_numeric(MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS)) {
+            $days = MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS;
+        }
+        
+        $date = xtc_date_long(date('Y-m-d', strtotime("+$days day")) . ' 00:00:00');
+        
+        if ($order->info['comments']) {
+            $order->info['comments'] .= "\n" . SEPA_DRAWN_TEXT . $date;
+        } else {
+            $order->info['comments'] = "\n" . SEPA_DRAWN_TEXT . $date;
+        }
+    }
     
     function confirmation()
     {
@@ -82,7 +102,6 @@ class paymill_elv extends paymill_abstract
         $script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>'
                 . '<script type="text/javascript">'
                 . 'var elvlogging = "' . MODULE_PAYMENT_PAYMILL_ELV_LOGGING . '";'
-                . 'var sepaActive ="' . MODULE_PAYMENT_PAYMILL_ELV_SEPA .'";'
                 . 'var elv_account_number_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID) . '";'
                 . 'var elv_bank_code_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID) . '";'
                 . 'var elv_bank_owner_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER_INVALID) . '";'
@@ -154,15 +173,17 @@ class paymill_elv extends paymill_abstract
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_FASTCHECKOUT', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_WEBHOOKS', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
-        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_SEPA', 'False', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_SORT_ORDER', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY', '0', '6', '0', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS', '0', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('MODULE_PAYMENT_PAYMILL_ELV_LOGGING', 'False', '6', '0', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYMILL_ELV_TRANSACTION_ORDER_STATUS_ID', '" . $this->getOrderStatusTransactionID() . "', '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_PAYMILL_ELV_ALLOWED', '', '6', '0', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, use_function, set_function, date_added) values ('MODULE_PAYMENT_PAYMILL_ELV_ZONE', '0', '6', '2', 'xtc_get_zone_class_title', 'xtc_cfg_pull_down_zone_classes(', now())");
+    
+        
     }
 
     function keys()
@@ -171,9 +192,9 @@ class paymill_elv extends paymill_abstract
             'MODULE_PAYMENT_PAYMILL_ELV_STATUS',
             'MODULE_PAYMENT_PAYMILL_ELV_FASTCHECKOUT',
             'MODULE_PAYMENT_PAYMILL_ELV_WEBHOOKS',
-            'MODULE_PAYMENT_PAYMILL_ELV_SEPA',
             'MODULE_PAYMENT_PAYMILL_ELV_PRIVATEKEY',
             'MODULE_PAYMENT_PAYMILL_ELV_PUBLICKEY',
+            'MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS',
             'MODULE_PAYMENT_PAYMILL_ELV_ORDER_STATUS_ID',
             'MODULE_PAYMENT_PAYMILL_ELV_TRANSACTION_ORDER_STATUS_ID',
             'MODULE_PAYMENT_PAYMILL_ELV_ZONE',
