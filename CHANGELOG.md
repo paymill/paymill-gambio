@@ -7,6 +7,7 @@
  * sepa collecting date is now configurable and displayed on the order and invoice mail
  * support lightbox checkout feature
  * limit the description to 128 signs all other signs be cut off
+ * remove jQuery, because the shop use it by itself
 
 ##1.6.0
 * Added Language Support for german, english, french, italian, spanish and portuguese

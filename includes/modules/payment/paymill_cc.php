@@ -179,8 +179,7 @@ class paymill_cc extends paymill_abstract
 
         $payment = $this->getPayment($_SESSION['customer_id']);
 
-        $script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>'
-                . '<script type="text/javascript">'
+        $script =  '<script type="text/javascript">'
                     . 'var cclogging = "' . MODULE_PAYMENT_PAYMILL_CC_LOGGING . '";'
                     . 'var cc_expiery_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_EXPIRY_INVALID) . '";'
                     . 'var cc_owner_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_OWNER_INVALID) . '";'
