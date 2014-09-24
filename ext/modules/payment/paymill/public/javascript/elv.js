@@ -1,5 +1,5 @@
 var isElvSubmitted = false;
-$(document).ready(function () {
+window.onload = function() {
     if (typeof $.fn.prop !== 'function') {
         $.fn.prop = function(name, value) {
             if (typeof value === 'undefined') {
@@ -12,9 +12,7 @@ $(document).ready(function () {
 
     PaymillCreateElvForm();
     PaymillAddElvFormFokusActions();
-});
 
-$(window).load(function(){
     $('form[action="paymill_confirmation_form"]').submit(function (event) {
         event.preventDefault();
         if (!isElvSubmitted) {
@@ -46,7 +44,7 @@ $(window).load(function(){
             }
         }
     });
-});
+};
 
 function PaymillValidateSepaForm(elvErrorFlag)
 {

@@ -1,5 +1,5 @@
 var isCcSubmitted = false;
-$(document).ready(function() {
+window.onload = function() {
     if (typeof $.fn.prop !== 'function') {
         $.fn.prop = function(name, value) {
             if (typeof value === 'undefined') {
@@ -12,10 +12,8 @@ $(document).ready(function() {
 
     PaymillCreateCCForm();
     PaymillAddCardDetection();
-	PaymillAddCCFormFokusActions();
-});
+    PaymillAddCCFormFokusActions();
 
-$(window).load(function(){
     $('form[action="paymill_confirmation_form"]').submit(function (event) {
         event.preventDefault();
         if (!isCcSubmitted) {
@@ -74,7 +72,7 @@ $(window).load(function(){
             }
         }
     });
-});
+};
 
 function PaymillCreateCCForm()
 {
