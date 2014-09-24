@@ -57,12 +57,15 @@ class Services_Paymill_PaymentProcessor
         $this->setPrivateKey($privateKey);
         $this->setApiUrl($apiUrl);
         $this->setLibBase($libBase);
-        $this->_token = $params['token'];
-        $this->_amount = $params['amount'];
-        $this->_currency = $params['currency'];
-        $this->_name = $params['name'];
-        $this->_email = $params['email'];
-        $this->_description = $params['description'];
+        if(is_array($params)){
+            $this->_token = $params['token'];
+            $this->_amount = $params['amount'];
+            $this->_currency = $params['currency'];
+            $this->_name = $params['name'];
+            $this->_email = $params['email'];
+            $this->_description = $params['description'];
+            $this->_source = $params['source'];
+        }
         $this->setLogger($loggingClassInstance);
     }
 

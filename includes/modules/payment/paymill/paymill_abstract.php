@@ -19,17 +19,17 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     var $api_version = '2';
     var $bridgeUrl = 'https://bridge.paymill.com/';
     var $apiUrl = 'https://api.paymill.com/v2/';
-    
+
     /**
      * @var FastCheckout
      */
     var $fastCheckout;
-    
+
     /**
      * @var Services_Paymill_Payments
      */
     var $payments;
-    
+
     /**
      *
      * @var Services_Paymill_PaymentProcessor
@@ -42,7 +42,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $this->description = "<p style='font-weight: bold; text-align: center'>$this->version</p>";
         $this->paymentProcessor = new Services_Paymill_PaymentProcessor();
     }
-    
+
     /**
      * @return FastCheckout
      */
@@ -50,7 +50,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     {
         return $this->fastCheckout;
     }
-    
+
     function update_status()
     {
         global $order;
@@ -81,7 +81,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
                 $this->enabled = false;
             }
         }
-        
+
         if (empty($this->privateKey) || empty($this->publicKey)) {
             $this->enabled = false;
         }
@@ -96,7 +96,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     {
         global $_GET;
         $error = '';
-        
+
         if (isset($_SESSION['paymill_error'])) {
             $error = urldecode($_SESSION['paymill_error']);
             unset($_SESSION['paymill_error']);
@@ -107,7 +107,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         if($error !== ''){
             $error_text['error'] = html_entity_decode(constant('PAYMILL_'.strtoupper($error)));
         }
-        
+
         return $error_text;
     }
 
@@ -120,7 +120,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     {
         return array(
             'id'     => $this->code,
-            'module' => $this->public_title      
+            'module' => $this->public_title
         );
     }
 
@@ -150,11 +150,11 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     {
         return false;
     }
-    
+
     function before_process()
     {
         global $order;
-        
+
         $_SESSION['paymill_identifier'] = time();
         $this->paymentProcessor->setAmount((int) $_SESSION['paymill']['amount']);
         $this->paymentProcessor->setApiUrl((string) $this->apiUrl);
@@ -168,16 +168,16 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $this->paymentProcessor->setSource($this->version . '_' . str_replace(' ', '_', PROJECT_VERSION));
 
         $this->fastCheckout->setFastCheckoutFlag($this->fastCheckoutFlag);
-        
+
         if ($_POST['paymill_token'] === 'dummyToken') {
             $this->fastCheckout();
         }
-        
+
         $data = $this->fastCheckout->loadFastCheckoutData($_SESSION['customer_id']);
         if (!empty($data['clientID'])) {
             $this->existingClient($data);
         }
-        
+
         $result = $this->paymentProcessor->processPayment();
         $_SESSION['paymill']['transaction_id'] = $this->paymentProcessor->getTransactionId();
 
@@ -187,16 +187,16 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             unset($_SESSION['paymill_identifier']);
             xtc_redirect(xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'payment_error=' . $this->code . '&error='.$errorCode, 'SSL', true, false));
         }
-        
+
         if ($this->fastCheckoutFlag) {
             $this->savePayment();
         } else {
             $this->saveClient();
         }
-        
+
         unset($_SESSION['paymill_identifier']);
     }
-    
+
     function getDescription($text)
     {
         return  substr($text, 0, 127);
@@ -219,7 +219,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             $this->paymentProcessor->setClientId($client['id']);
         }
     }
-    
+
     function fastCheckout()
     {
         $data = $this->fastCheckout->loadFastCheckoutData($_SESSION['customer_id']);
@@ -229,7 +229,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
                 $this->paymentProcessor->setPaymentId($data['paymentID_CC']);
             }
         }
-        
+
         if ($this->fastCheckout->canCustomerFastCheckoutElv($_SESSION['customer_id']) && $this->code === 'paymill_elv') {
             if (!empty($data['paymentID_ELV'])) {
                 $this->paymentProcessor->setPaymentId($data['paymentID_ELV']);
@@ -251,7 +251,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             );
         }
     }
-    
+
     function saveClient()
     {
         if ($this->code === 'paymill_cc') {
@@ -266,7 +266,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             );
         }
     }
-    
+
     function after_process()
     {
         global $order, $insert_id;
@@ -292,7 +292,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         if ($this->order_status) {
             xtc_db_query("UPDATE " . TABLE_ORDERS . " SET orders_status='" . $this->order_status . "' WHERE orders_id='" . $insert_id . "'");
         }
-        
+
         unset($_SESSION['paymill']);
     }
 
@@ -336,16 +336,16 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             if (array_key_exists('paymill_identifier', $_SESSION)) {
                  xtc_db_query("INSERT INTO `pi_paymill_logging` "
                             . "(debug, message, identifier) "
-                            . "VALUES('" 
-                              . xtc_db_input($debugInfo) . "', '" 
-                              . xtc_db_input($messageInfo) . "', '" 
-                              . xtc_db_input($_SESSION['paymill_identifier']) 
+                            . "VALUES('"
+                              . xtc_db_input($debugInfo) . "', '"
+                              . xtc_db_input($messageInfo) . "', '"
+                              . xtc_db_input($_SESSION['paymill_identifier'])
                             . "')"
                 );
             }
         }
     }
-    
+
     function format_raw($number)
     {
         return number_format(round($number, 2), 2, '', '');
@@ -365,7 +365,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         xtc_db_query("UPDATE admin_access SET paymill_logging = '1', paymill_log = '1', paymill_webhook_listener = '1' WHERE customers_id= '1' OR customers_id = 'groups'");
 
         xtc_db_query("DROP TABLE IF EXISTS `pi_paymill_logging`");
-        
+
         xtc_db_query(
             "CREATE TABLE IF NOT EXISTS `pi_paymill_logging` ("
           . "`id` int(11) NOT NULL AUTO_INCREMENT,"
@@ -376,7 +376,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
           . "PRIMARY KEY (`id`)"
         . ") AUTO_INCREMENT=1"
         );
-        
+
         xtc_db_query(
             "CREATE TABLE IF NOT EXISTS `pi_paymill_fastcheckout` ("
            . "`userID` varchar(100),"
