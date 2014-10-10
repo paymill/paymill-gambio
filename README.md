@@ -18,7 +18,7 @@ that all needed tables are created.
 
 # Installation
 
-Download the following zip file and upload the extracted files in the root directory of your Gambio shop.
+Download the following zip file and upload the content of extracted folder in the root directory of your Gambio shop.
 
 https://github.com/paymill/paymill-gambio/archive/master.zip
 
