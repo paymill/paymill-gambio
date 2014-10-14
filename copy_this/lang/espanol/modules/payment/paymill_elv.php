@@ -95,4 +95,7 @@ define("MODULE_PAYMENT_PAYMILL_ELV_STATUS_DESC", "");
 define("SEPA_DRAWN_TEXT", "The direct debit is drawn to the following date: ");
 define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_TITLE", "Days until the debit");
 define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_DESC", "");
+define('PAYMILL_REFUND_BUTTON_TEXT', 'refund order');
+define('PAYMILL_REFUND_SUCCESS', 'Order successful refunded.');
+define('PAYMILL_REFUND_ERROR', 'Order not successful refunded.');
 ?>

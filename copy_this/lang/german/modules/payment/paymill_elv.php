@@ -95,4 +95,7 @@ define("MODULE_PAYMENT_PAYMILL_ELV_STATUS_DESC", "");
 define("SEPA_DRAWN_TEXT", "Die Lastschrift wird zu dem folgenden Termin eingezogen: ");
 define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_TITLE", "Tage bis zum Einzug");
 define("MODULE_PAYMENT_PAYMILL_ELV_PRENOTIFICATION_DAYS_DESC", "");
+define('PAYMILL_REFUND_BUTTON_TEXT', 'Bestellung erstatten');
+define('PAYMILL_REFUND_SUCCESS', 'Bestellung erfolgreich erstattet.');
+define('PAYMILL_REFUND_ERROR', 'Bestellung nicht erfolgreich erstattet.');
 ?>

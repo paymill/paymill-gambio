@@ -125,4 +125,7 @@ define("TEXT_INFO_API_VERSION", "API Version");
 define("MODULE_PAYMENT_PAYMILL_CC_STATUS_DESC", "");
 define("MODULE_PAYMENT_PAYMILL_CC_ORDER_STATUS_ID_DESC", "");
 define("MODULE_PAYMENT_PAYMILL_CC_ACCEPTED_CARDS", "Accepted Credit Cards");
+define('PAYMILL_REFUND_BUTTON_TEXT', 'Bestellung erstatten');
+define('PAYMILL_REFUND_SUCCESS', 'Bestellung erfolgreich erstattet.');
+define('PAYMILL_REFUND_ERROR', 'Bestellung nicht erfolgreich erstattet.');
 ?>
