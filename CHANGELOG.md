@@ -1,4 +1,8 @@
 #Release Notes
+##1.8.0
+ * add refund
+ * limit transaction description to 128 signs
+
 ##1.7.1
 fix document.ready() bug during the issue that the native jQuery is loaded later as the paymill js
 
