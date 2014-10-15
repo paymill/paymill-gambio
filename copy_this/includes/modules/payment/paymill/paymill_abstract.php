@@ -15,7 +15,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
 {
 
     var $code, $title, $description = '', $enabled, $privateKey, $logging, $fastCheckoutFlag, $label, $order_status;
-    var $version = '1.7.1';
+    var $version = '1.8.0';
     var $api_version = '2';
     var $bridgeUrl = 'https://bridge.paymill.com/';
     var $apiUrl = 'https://api.paymill.com/v2/';
@@ -159,7 +159,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $this->paymentProcessor->setAmount((int) $_SESSION['paymill']['amount']);
         $this->paymentProcessor->setApiUrl((string) $this->apiUrl);
         $this->paymentProcessor->setCurrency((string) strtoupper($order->info['currency']));
-        $this->paymentProcessor->setDescription(substr($this->getDescription(utf8_encode((string) STORE_NAME . ' ' . $order->customer['lastname'] . ', ' . $order->customer['firstname']), 0, 128)));
+        $this->paymentProcessor->setDescription($this->getDescription(utf8_encode((string) STORE_NAME . ' ' . $order->customer['lastname'] . ', ' . $order->customer['firstname'])));
         $this->paymentProcessor->setEmail((string) $order->customer['email_address']);
         $this->paymentProcessor->setName($order->customer['lastname'] . ', ' . $order->customer['firstname']);
         $this->paymentProcessor->setPrivateKey((string) $this->privateKey);
@@ -288,6 +288,7 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
         $this->updateTransaction($_SESSION['paymill']['transaction_id'], $insert_id);
 
         xtc_db_perform(TABLE_ORDERS_STATUS_HISTORY, $sql_data_array);
+        xtc_db_query("INSERT INTO pi_paymill_transaction (order_id, transaction_id, amount) VALUES ('" . xtc_db_prepare_input($insert_id) . "', '" . xtc_db_prepare_input($_SESSION['paymill']['transaction_id']) . "', '" . (int) $_SESSION['paymill']['amount'] . "')");
 
         if ($this->order_status) {
             xtc_db_query("UPDATE " . TABLE_ORDERS . " SET orders_status='" . $this->order_status . "' WHERE orders_id='" . $insert_id . "'");
@@ -402,6 +403,15 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
             . ")"
         );
 
+        xtc_db_query(
+            "CREATE TABLE IF NOT EXISTS `pi_paymill_transaction` ("
+            . "`order_id` varchar(100),"
+            . "`transaction_id` varchar(100),"
+            . "`amount` varchar(100),"
+            . "PRIMARY KEY (`order_id`)"
+            . ")"
+        );
+        
         $this->addOrderState('Paymill [Refund]');
         $this->addOrderState('Paymill [Chargeback]');
     }

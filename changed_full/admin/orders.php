@@ -362,6 +362,12 @@ else
 									 <?php /* BOF GM_MOD */ echo GM_ORDERS_NUMBER . $oID . ' - ' . xtc_date_short($order->info['date_purchased']) . ' ' . date("H:i", strtotime($order->info['date_purchased'])) . GM_ORDERS_EDIT_CLOCK; /* EOF GM_MOD */?>
 								</div>
 								<div>
+                                                                    <!-- Paymill begin -->
+                                                                    <?php if ($order->info['payment_method'] == 'paymill_cc' || $order->info['payment_method'] == 'paymill_elv') { ?>
+                                                                       <?php include(dirname(__FILE__) . '/../lang/' . $_SESSION['language'] . '/modules/payment/' . $order->info['payment_method'] . '.php'); ?>
+                                                                       <a class="button float_right" href="<?php echo xtc_href_link('paymill_refund.php','oID=' . $_GET['oID']); ?>"><?php echo PAYMILL_REFUND_BUTTON_TEXT; ?></a>
+                                                                    <?php } ?>
+                                                                    <!-- Paymill end -->
 									<?php echo '<a class="button float_right" href="' . xtc_href_link(FILENAME_ORDERS, xtc_get_all_get_params(array('action'))) . '">' . BUTTON_BACK . '</a>'; ?>
 									<a class="button float_right" href="<?php echo xtc_href_link(FILENAME_ORDERS_EDIT, 'oID='.$_GET['oID'].'&cID=' . $order->customer['ID']);?>"><?php echo BUTTON_EDIT ?></a>
 								</div>
@@ -549,7 +555,7 @@ else
 						</tr></table>
 					<?php
 						}
-     // Start Sofortüberweisung
+     // Start Sofortï¿½berweisung
 	if (MODULE_PAYMENT_SOFORTUEBERWEISUNG_DIRECT_STATUS == 'True' ) {
       $sofortueberweisung_check_query = xtc_db_query("SELECT sofortueberweisung_transaktions_details FROM " . TABLE_ORDERS . " WHERE orders_id = '" . xtc_db_input($_GET['oID']). "'");
       if ($sofortueberweisung_check = xtc_db_fetch_array($sofortueberweisung_check_query)) {
@@ -675,7 +681,7 @@ else
 	       }
 	     }
 
-  // End Sofortüberweisung
+  // End Sofortï¿½berweisung
 
 
 					// begin modification for banktransfer
