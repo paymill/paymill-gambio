@@ -154,7 +154,6 @@ class paymill_abstract implements Services_Paymill_LoggingInterface
     function before_process()
     {
         global $order;
-
         $_SESSION['paymill_identifier'] = time();
         $this->paymentProcessor->setAmount((int) $_SESSION['paymill']['amount']);
         $this->paymentProcessor->setApiUrl((string) $this->apiUrl);

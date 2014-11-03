@@ -109,7 +109,9 @@ function PaymillCreateElvForm()
     $('#account-name-field').html('<input type="text" value="' + paymill_elv_holder + '" id="paymill-bank-owner" class="form-row-paymill" />');
 	$('#iban-field').html('<input type="text" value="' + paymill_elv_iban + '" id="paymill-iban" class="form-row-paymill" autocomplete="off"/>');
 	$('#bic-field').html('<input type="text" value="' + paymill_elv_bic + '" id="paymill-bic" class="form-row-paymill" autocomplete="off"/>');
-	$('#bic-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
+	if ($('#paymill_form').length == 0) {
+		$('#bic-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
+	}
 }
 
 function PaymillCreateElvToken()

@@ -4,6 +4,8 @@ require_once('paymill/paymill_abstract.php');
 class paymill_elv extends paymill_abstract
 {
 
+    
+    
     function paymill_elv()
     {
         parent::paymill_abstract();
@@ -100,7 +102,6 @@ class paymill_elv extends paymill_abstract
         $payment = $this->getPayment($_SESSION['customer_id']);
         
         $script = '<script type="text/javascript">'
-                . 'var elvlogging = "' . MODULE_PAYMENT_PAYMILL_ELV_LOGGING . '";'
                 . 'var elv_account_number_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_INVALID) . '";'
                 . 'var elv_bank_code_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_BANKCODE_INVALID) . '";'
                 . 'var elv_bank_owner_invalid = "' . html_entity_decode(MODULE_PAYMENT_PAYMILL_ELV_TEXT_ACCOUNT_HOLDER_INVALID) . '";'

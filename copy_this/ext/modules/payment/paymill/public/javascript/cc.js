@@ -81,8 +81,9 @@ function PaymillCreateCCForm()
     $('#card-expiry-month-field').html('<select id="paymill-card-expiry-month" autocomplete="off"></select>');
     $('#card-expiry-year-field').html('<select id="paymill-card-expiry-year" autocomplete="off"></select>');
     $('#card-cvc-field').html('<input type="password" value="' + paymill_cc_cvc_val + '" id="paymill-card-cvc" class="form-row-paymill" size="5" maxlength="4" autocomplete="off"/>');
-    $('#card-cvc-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
-
+    if ($('#paymill_form').length == 0) {
+		$('#card-cvc-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
+	}
     for ( var cc_month_counter in paymill_cc_months ) {
         var cc_month_value = paymill_cc_months[cc_month_counter][0];
         var cc_month_text = $("<div\>").html(paymill_cc_months[cc_month_counter][1]).text();
