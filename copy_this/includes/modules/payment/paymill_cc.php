@@ -198,6 +198,7 @@ class paymill_cc extends paymill_abstract
                     . 'var paymill_cc_expiry_year_val = "' . $payment['expire_year'] . '";'
                     . 'var paymill_cc_fastcheckout = ' . ($this->fastCheckout->canCustomerFastCheckoutCc($_SESSION['customer_id']) ? 'true' : 'false') . ';'
                     . 'var checkout_payment_link = "' . xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=', 'SSL', true, false) . '";'
+                    . 'var success_link = "' . xtc_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL') . '";'
                     . 'var logos =  new Array();'
                     . "logos['amex'] = " . strtolower(MODULE_PAYMENT_PAYMILL_CC_AMEX) . ";"
                     . "logos['carta-si'] = " . strtolower(MODULE_PAYMENT_PAYMILL_CC_CARTASI) . ";"
@@ -246,12 +247,6 @@ class paymill_cc extends paymill_abstract
             array(
                 'title' => '<div class="paymill-label-field">' . MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC . '<span class="tooltip" title="' . MODULE_PAYMENT_PAYMILL_CC_TEXT_CREDITCARD_CVC_TOOLTIP . '">?</span></div>',
                 'field' => '<span id="card-cvc-field" class="card-cvc-row"></span><div id="card-cvc-error" class="paymill-error"></div>'
-            )
-        );
-
-        array_push($confirmation['fields'],
-            array(
-                'field' => '<form id="paymill_form" action="' . xtc_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL') . '" method="post" style="display: none;"></form>'
             )
         );
 

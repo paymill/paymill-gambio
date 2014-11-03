@@ -1,4 +1,8 @@
 #Release Notes
+##1.8.1
+ * create token form vow also via javascript
+ * beter window.onload onload handling to avoid overwritten events
+
 ##1.8.0
  * add refund
  * limit transaction description to 128 signs

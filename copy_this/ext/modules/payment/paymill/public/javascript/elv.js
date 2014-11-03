@@ -1,5 +1,5 @@
 var isElvSubmitted = false;
-window.onload = function() {
+paymillInit = function() {
     if (typeof $.fn.prop !== 'function') {
         $.fn.prop = function(name, value) {
             if (typeof value === 'undefined') {
@@ -7,7 +7,7 @@ window.onload = function() {
             } else {
                 return this.attr(name, value);
             }
-        }
+        };
     }
 
     PaymillCreateElvForm();
@@ -40,7 +40,8 @@ window.onload = function() {
 
                 return false;
             } else {
-                $('#paymill_form').html('<input type="hidden" name="paymill_token" value="dummyToken" />').submit();
+                $('#paymill_form').html('<input type="hidden" name="paymill_token" value="dummyToken" />');
+				$('#paymill_form')[0].submit();
             }
         }
     });
@@ -108,6 +109,7 @@ function PaymillCreateElvForm()
     $('#account-name-field').html('<input type="text" value="' + paymill_elv_holder + '" id="paymill-bank-owner" class="form-row-paymill" />');
 	$('#iban-field').html('<input type="text" value="' + paymill_elv_iban + '" id="paymill-iban" class="form-row-paymill" autocomplete="off"/>');
 	$('#bic-field').html('<input type="text" value="' + paymill_elv_bic + '" id="paymill-bic" class="form-row-paymill" autocomplete="off"/>');
+	$('#bic-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
 }
 
 function PaymillCreateElvToken()
@@ -148,7 +150,16 @@ function PaymillElvResponseHandler(error, result)
         console.log(error);
         window.location = $("<div/>").html(checkout_payment_link + error.apierror).text();
     } else {
-        $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />').submit();
+        $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />')
+		$('#paymill_form')[0].submit();
         return false;
     }
+}
+
+if (window.addEventListener) {
+    window.addEventListener("load", paymillInit);
+} else if (window.attachEvent) {
+    window.attachEvent("onload", paymillInit);
+} else { 
+	window.onload = paymillInit;
 }

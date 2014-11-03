@@ -114,6 +114,7 @@ class paymill_elv extends paymill_abstract
                 . 'var paymill_elv_account = "' . $payment['account'] . '";'
                 . 'var paymill_elv_fastcheckout = ' . ($this->fastCheckout->canCustomerFastCheckoutElv($_SESSION['customer_id']) ? 'true' : 'false') . ';'
                 . 'var checkout_payment_link = "' . xtc_href_link(FILENAME_CHECKOUT_PAYMENT, 'step=step2&payment_error=' . $this->code . '&error=', 'SSL', true, false) . '";'
+                . 'var success_link = "' . xtc_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL') . '";'
                 . '</script>'
                 . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/Iban.js"></script>'
                 . '<script type="text/javascript" src="ext/modules/payment/paymill/public/javascript/elv.js"></script>';
@@ -144,14 +145,6 @@ class paymill_elv extends paymill_abstract
                  'field' => '<span id="bic-field"></span><span id="elv-bic-error" class="paymill-error"></span>'
             )
         );
-
-
-        array_push($confirmation['fields'],
-            array(
-                'field' => '<form id="paymill_form" action="' . xtc_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL') . '" method="post" style="display: none;"></form>'
-            )
-        );
-
 
         return $confirmation;
     }

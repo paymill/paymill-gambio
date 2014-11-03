@@ -1,5 +1,5 @@
 var isCcSubmitted = false;
-window.onload = function() {
+paymillInit = function() {
     if (typeof $.fn.prop !== 'function') {
         $.fn.prop = function(name, value) {
             if (typeof value === 'undefined') {
@@ -68,7 +68,7 @@ window.onload = function() {
                 return false;
             } else {
                 $('#paymill_form').append('<input type="hidden" name="paymill_token" value="dummyToken" />');
-                $('#paymill_form').submit();
+                $('#paymill_form')[0].submit();
             }
         }
     });
@@ -81,6 +81,7 @@ function PaymillCreateCCForm()
     $('#card-expiry-month-field').html('<select id="paymill-card-expiry-month" autocomplete="off"></select>');
     $('#card-expiry-year-field').html('<select id="paymill-card-expiry-year" autocomplete="off"></select>');
     $('#card-cvc-field').html('<input type="password" value="' + paymill_cc_cvc_val + '" id="paymill-card-cvc" class="form-row-paymill" size="5" maxlength="4" autocomplete="off"/>');
+    $('#card-cvc-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
 
     for ( var cc_month_counter in paymill_cc_months ) {
         var cc_month_value = paymill_cc_months[cc_month_counter][0];
@@ -214,7 +215,7 @@ function PaymillCcResponseHandler(error, result)
         return false;
     } else {
         $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />');
-        $('#paymill_form').submit();
+        $('#paymill_form')[0].submit();
     }
 }
 
@@ -236,3 +237,10 @@ function replaceUmlauts(string)
     return string;
 }
 
+if (window.addEventListener) {
+    window.addEventListener("load", paymillInit);
+} else if (window.attachEvent) {
+    window.attachEvent("onload", paymillInit);
+} else { 
+	window.onload = paymillInit;
+}
