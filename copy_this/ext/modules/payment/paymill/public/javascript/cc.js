@@ -17,8 +17,9 @@ paymillInit = function() {
     $('form[action="paymill_confirmation_form"]').submit(function (event) {
         event.preventDefault();
         if (!isCcSubmitted) {
+            isCcSubmitted = true;
             if (!paymill_cc_fastcheckout) {
-                isCcSubmitted = true;
+                
                 hideErrorBoxes();
                 var ccErrorFlag = true;
 

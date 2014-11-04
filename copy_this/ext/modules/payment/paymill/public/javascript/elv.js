@@ -16,8 +16,8 @@ paymillInit = function() {
     $('form[action="paymill_confirmation_form"]').submit(function (event) {
         event.preventDefault();
         if (!isElvSubmitted) {
+            isElvSubmitted = true;
             if (!paymill_elv_fastcheckout) {
-                isElvSubmitted = true;
                 hideErrorBoxes();
                 var elvErrorFlag = true;
 
