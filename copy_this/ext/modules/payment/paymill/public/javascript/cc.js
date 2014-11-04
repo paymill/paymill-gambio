@@ -18,6 +18,7 @@ paymillInit = function() {
         event.preventDefault();
         if (!isCcSubmitted) {
             if (!paymill_cc_fastcheckout) {
+                isCcSubmitted = true;
                 hideErrorBoxes();
                 var ccErrorFlag = true;
 
@@ -46,6 +47,7 @@ paymillInit = function() {
                 }
 
                 if (!ccErrorFlag) {
+                    isCcSubmitted = false;
                     return ccErrorFlag;
                 }
 
@@ -82,8 +84,9 @@ function PaymillCreateCCForm()
     $('#card-expiry-year-field').html('<select id="paymill-card-expiry-year" autocomplete="off"></select>');
     $('#card-cvc-field').html('<input type="password" value="' + paymill_cc_cvc_val + '" id="paymill-card-cvc" class="form-row-paymill" size="5" maxlength="4" autocomplete="off"/>');
     if ($('#paymill_form').length == 0) {
-		$('#card-cvc-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
-	}
+        $('#card-cvc-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
+    }
+    
     for ( var cc_month_counter in paymill_cc_months ) {
         var cc_month_value = paymill_cc_months[cc_month_counter][0];
         var cc_month_text = $("<div\>").html(paymill_cc_months[cc_month_counter][1]).text();
@@ -149,28 +152,28 @@ function PaymillAddCardDetection()
             suffix = '-temp';
         }
 
-		if (logos[brand] || allBrandsDisabled) {
-			switch (brand) {
-				case 'unknown':
-					$('#paymill-card-number').removeClass();
-					$('#paymill-card-number').addClass('form-row-paymill');
-					break;
-				case 'carte-bleue':
-				case 'maestro':
-				case 'dankort':
-				case 'carta-si':
-				case 'discover':
-				case 'jcb':
-				case 'amex':
-				case 'china-unionpay':
-				case 'diners-club':
-				case 'mastercard':
-				case 'visa':
-					$('#paymill-card-number').removeClass();
-					$('#paymill-card-number').addClass('form-row-paymill ' + cssClass + brand + suffix);
-					break;
-			}
-		}
+        if (logos[brand] || allBrandsDisabled) {
+            switch (brand) {
+                case 'unknown':
+                        $('#paymill-card-number').removeClass();
+                        $('#paymill-card-number').addClass('form-row-paymill');
+                        break;
+                case 'carte-bleue':
+                case 'maestro':
+                case 'dankort':
+                case 'carta-si':
+                case 'discover':
+                case 'jcb':
+                case 'amex':
+                case 'china-unionpay':
+                case 'diners-club':
+                case 'mastercard':
+                case 'visa':
+                        $('#paymill-card-number').removeClass();
+                        $('#paymill-card-number').addClass('form-row-paymill ' + cssClass + brand + suffix);
+                        break;
+            }
+        }
     });
 }
 
@@ -208,7 +211,6 @@ function hideErrorBoxes()
 
 function PaymillCcResponseHandler(error, result)
 {
-    isCcSubmitted = true;
     if (error) {
         isCcSubmitted = false;
         console.log(error);
@@ -243,5 +245,5 @@ if (window.addEventListener) {
 } else if (window.attachEvent) {
     window.attachEvent("onload", paymillInit);
 } else { 
-	window.onload = paymillInit;
+    window.onload = paymillInit;
 }

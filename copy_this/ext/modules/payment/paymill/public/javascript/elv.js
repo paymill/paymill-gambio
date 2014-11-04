@@ -17,6 +17,7 @@ paymillInit = function() {
         event.preventDefault();
         if (!isElvSubmitted) {
             if (!paymill_elv_fastcheckout) {
+                isElvSubmitted = true;
                 hideErrorBoxes();
                 var elvErrorFlag = true;
 
@@ -33,6 +34,7 @@ paymillInit = function() {
                 }
 
                 if (!elvErrorFlag) {
+                    isElvSubmitted = false;
                     return elvErrorFlag;
                 }
 
@@ -41,7 +43,7 @@ paymillInit = function() {
                 return false;
             } else {
                 $('#paymill_form').html('<input type="hidden" name="paymill_token" value="dummyToken" />');
-				$('#paymill_form')[0].submit();
+                $('#paymill_form')[0].submit();
             }
         }
     });
@@ -90,28 +92,28 @@ function PaymillAddElvFormFokusActions()
         paymill_elv_fastcheckout = false;
     });
 
-	$('#paymill-iban').focus(function() {
-		paymill_elv_fastcheckout = false;
-	});
+    $('#paymill-iban').focus(function() {
+        paymill_elv_fastcheckout = false;
+    });
 
-	$('#paymill-bic').focus(function() {
-		paymill_elv_fastcheckout = false;
-	});
+    $('#paymill-bic').focus(function() {
+        paymill_elv_fastcheckout = false;
+    });
 }
 
 function PaymillCreateElvForm()
 {
-	if (paymill_elv_iban === "") {
-		paymill_elv_iban = paymill_elv_account;
-		paymill_elv_bic = paymill_elv_code;
-	}
+    if (paymill_elv_iban === "") {
+        paymill_elv_iban = paymill_elv_account;
+        paymill_elv_bic = paymill_elv_code;
+    }
 	
     $('#account-name-field').html('<input type="text" value="' + paymill_elv_holder + '" id="paymill-bank-owner" class="form-row-paymill" />');
-	$('#iban-field').html('<input type="text" value="' + paymill_elv_iban + '" id="paymill-iban" class="form-row-paymill" autocomplete="off"/>');
-	$('#bic-field').html('<input type="text" value="' + paymill_elv_bic + '" id="paymill-bic" class="form-row-paymill" autocomplete="off"/>');
-	if ($('#paymill_form').length == 0) {
-		$('#bic-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
-	}
+    $('#iban-field').html('<input type="text" value="' + paymill_elv_iban + '" id="paymill-iban" class="form-row-paymill" autocomplete="off"/>');
+    $('#bic-field').html('<input type="text" value="' + paymill_elv_bic + '" id="paymill-bic" class="form-row-paymill" autocomplete="off"/>');
+    if ($('#paymill_form').length == 0) {
+        $('#bic-field').after('<form id="paymill_form" action="' + success_link + '" method="POST"/>');
+    }
 }
 
 function PaymillCreateElvToken()
@@ -133,27 +135,26 @@ function PaymillCreateElvToken()
 
 function isSepa() 
 {
-	var reg = new RegExp(/^\D{2}/);
-	return reg.test($('#paymill-iban').val());
+    var reg = new RegExp(/^\D{2}/);
+    return reg.test($('#paymill-iban').val());
 }
 
 function hideErrorBoxes()
 {
     $("#elv-holder-error").css('display', 'none');
-	$("#elv-iban-error").css('display', 'none');
-	$("#elv-bic-error").css('display', 'none');
+    $("#elv-iban-error").css('display', 'none');
+    $("#elv-bic-error").css('display', 'none');
 }
 
 function PaymillElvResponseHandler(error, result)
 {
-    isElvSubmitted = true;
     if (error) {
         isElvSubmitted = false;
         console.log(error);
         window.location = $("<div/>").html(checkout_payment_link + error.apierror).text();
     } else {
         $('#paymill_form').html('<input type="hidden" name="paymill_token" value="' + result.token + '" />')
-		$('#paymill_form')[0].submit();
+        $('#paymill_form')[0].submit();
         return false;
     }
 }
@@ -163,5 +164,5 @@ if (window.addEventListener) {
 } else if (window.attachEvent) {
     window.attachEvent("onload", paymillInit);
 } else { 
-	window.onload = paymillInit;
+    window.onload = paymillInit;
 }
