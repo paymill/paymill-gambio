@@ -1,14 +1,14 @@
 #Release Notes
 ##1.8.1
  * create token form vow also via javascript
- * beter window.onload onload handling to avoid overwritten events
+ * better window.onload onload handling to avoid overwritting other onload handlers
 
 ##1.8.0
  * add refund
  * limit transaction description to 128 signs
 
 ##1.7.1
-fix document.ready() bug during the issue that the native jQuery is loaded later as the paymill js
+ * fix document.ready() bug during the issue that the native jQuery is loaded later as the paymill js
 
 ##1.7.0
  * add brand logos with on/off setting per brand for the selection page and over the payment form
