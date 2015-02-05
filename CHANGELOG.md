@@ -1,6 +1,6 @@
 #Release Notes
 ##1.8.1
- * create token form vow also via javascript
+ * create token form now also via javascript
  * better window.onload onload handling to avoid overwritting other onload handlers
 
 ##1.8.0
